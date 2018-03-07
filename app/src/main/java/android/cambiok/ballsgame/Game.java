@@ -22,6 +22,10 @@ public class Game {
     // Joueur Joueur1;
     // Joueur Joueur2;
 
+    public Game() { // Constructeur
+
+    }
+
     void GenerationAleatoireTableau(int difficulte) {
         // ..
     }
