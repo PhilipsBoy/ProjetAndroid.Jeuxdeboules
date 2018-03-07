@@ -6,5 +6,22 @@ package android.cambiok.ballsgame;
 
 public class Joueur {
     int score;
-    String Pseudo;
+    String Name;
+
+
+    int getScore() {
+        return score;
+    }
+
+    void setScore(int scoreJoueur) {
+        score =  scoreJoueur;
+    }
+
+    String getName() {
+        return Name;
+    }
+
+    void setName(String JoueurName) {
+        Name =  JoueurName;
+    }
 }
