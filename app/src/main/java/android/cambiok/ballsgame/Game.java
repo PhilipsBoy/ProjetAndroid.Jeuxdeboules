@@ -17,5 +17,23 @@ Methodes à faire :
 */
 
 public class Game {
+    int Tableau[][];
+
+    // Joueur Joueur1;
+    // Joueur Joueur2;
+
+    void GenerationAleatoireTableau(int difficulte) {
+        // ..
+    }
+
+    int [] [] TrouverVoisin() {
+        // ..
+
+        return Tableau;
+    }
+
+    int [][] getTableau()  {
+        return Tableau;
+    }
 
 }
