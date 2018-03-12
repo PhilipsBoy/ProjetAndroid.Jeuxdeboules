@@ -43,9 +43,9 @@ public class Game {
 
     public int [][] getTableau() {return Tableau;}
 
-    public Game() { // Constructeur
-        setTailleX(10);
-        setTailleY(10);
+    public Game(int tailleX, int tailleY) { // Constructeur
+        setTailleX(tailleX);
+        setTailleY(tailleY);
 
         Tableau = new int[getTailleX()][getTailleY()];
         GenerationAleatoireTableau(3);

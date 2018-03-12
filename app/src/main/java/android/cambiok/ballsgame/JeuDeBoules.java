@@ -20,17 +20,21 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 
+
+
 public class JeuDeBoules extends AppCompatActivity {
 
     private Canvas testCanv;
     private Paint testPaint = new Paint();
 
+    Game GameEngine = new Game(13, 10);
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new MyView(this));
+
     }
 
     public class MyView extends View {
@@ -62,21 +66,33 @@ public class JeuDeBoules extends AppCompatActivity {
             // w = right
             // z = bot
 
+            int tab [][]= GameEngine.getTableau();
+
             int taille = 100;
             int espacement = 107;
 
-            int tailleX = 10;
-            int tailleY = 10;
-
-            for (j = 0, y = 5; j < tailleX; j++) {
 
 
-                for (i = 0, x = 5; i < tailleY; i++) {
+            for (j = 0, y = 5; j < GameEngine.getTailleX(); j++) {
+
+
+                for (i = 0, x = 5; i < GameEngine.getTailleY(); i++) {
 
 
 
                     testPaint.setStyle(Paint.Style.FILL);
-                    testPaint.setColor(Color.BLUE);
+
+                    if (tab[j][i] == 1) {
+                        testPaint.setColor(Color.BLUE);
+                    }
+                    else if (tab[j][i] == 2) {
+                        testPaint.setColor(Color.RED);
+                    }
+                    else {
+                        testPaint.setColor(Color.GREEN);
+                    }
+
+
                     testCanv.drawRect(x, y, x+taille, y+taille, testPaint);
                     x = x + espacement;
                 }
@@ -84,52 +100,9 @@ public class JeuDeBoules extends AppCompatActivity {
                 y = y + espacement;
             }
 
-            /*
-
-            for(j = 0; j < 4; j++){
-
-                //x = x + (i+200);
-                y = y + 105;
-                //w = w + (i+200);
-                z = z + 105;
-/*
-                testPaint.setStyle(Paint.Style.FILL);
-                testPaint.setColor(Color.BLUE);
-                testCanv.drawRect(x,y,w,z, testPaint);
-
-                for(j = 0; j < 4; j++){
-
-                    x = x + 105;
-                    //y = y + 105;
-                    w = w + 105;
-                    //z = z + 105;
-
-                    testPaint.setStyle(Paint.Style.FILL);
-                    testPaint.setColor(Color.GREEN);
-                    testCanv.drawRect(x,y,w,z, testPaint);
-
-                }
-
-            }
-
-            */
 
 
-/*
-            for(j = 0; j < 15; j++){
-
-                x = x + 105;
-                //y = y + 105;
-                w = w + 105;
-                //z = z + 105;
-
-                testPaint.setStyle(Paint.Style.FILL);
-                testPaint.setColor(Color.GREEN);
-                testCanv.drawRect(x,y,w,z, testPaint);
-
-            }*/
-
-            }
+        }
 
 
     }
