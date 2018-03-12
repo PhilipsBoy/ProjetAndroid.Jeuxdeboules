@@ -12,19 +12,9 @@ public class Joueur {
         setScore(0);
     }
 
-    int getScore() {
-        return score;
-    }
+    int getScore() {return score;}
+    void setScore(int scoreJoueur) {score = scoreJoueur;}
 
-    void setScore(int scoreJoueur) {
-        score =  scoreJoueur;
-    }
-
-    String getName() {
-        return Name;
-    }
-
-    void setName(String JoueurName) {
-        Name =  JoueurName;
-    }
+    String getName() {return Name;}
+    void setName(String JoueurName) {Name = JoueurName;}
 }
