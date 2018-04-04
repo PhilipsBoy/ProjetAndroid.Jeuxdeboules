@@ -14,9 +14,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 
@@ -26,6 +29,12 @@ public class JeuDeBoules extends AppCompatActivity {
 
     private Canvas testCanv;
     private Paint testPaint = new Paint();
+    private Paint paintcoord = new Paint();
+    float initialX, initialY;
+
+    int xx, yy;
+
+    int taille = 100;
 
     Game GameEngine = new Game(13, 10);
 
@@ -40,10 +49,42 @@ public class JeuDeBoules extends AppCompatActivity {
     public class MyView extends View {
         Paint paint = null;
 
+
+
+
         public MyView(Context context) {
             super(context);
             paint = new Paint();
         }
+
+        public boolean onTouchEvent (MotionEvent event) {
+
+            int action = event.getAction();
+
+
+
+            switch (action) {
+
+             case(MotionEvent.ACTION_DOWN):
+
+                    initialX = event.getX();
+                    initialY = event.getY();
+
+                    xx = (int) initialX / 107;
+                    yy = (int) initialY / 107;
+
+
+                 Log.d("MYINT", "value: " + xx);
+                 Log.d("MYINT2", "value: " + yy);
+
+                    break;
+
+            }
+            invalidate();
+            return true;
+        }
+
+
 
         protected void onDraw(Canvas testCanv) {
             super.onDraw(testCanv);
@@ -68,7 +109,7 @@ public class JeuDeBoules extends AppCompatActivity {
 
             int tab [][]= GameEngine.getTableau();
 
-            int taille = 100;
+
             int espacement = 107;
 
 
@@ -88,18 +129,44 @@ public class JeuDeBoules extends AppCompatActivity {
                     else if (tab[j][i] == 2) {
                         testPaint.setColor(Color.RED);
                     }
+                    else if (tab[j][i] == 3) {
+                        testPaint.setColor(Color.YELLOW);
+                    }
+                    else if (tab[j][i] == 4) {
+                        testPaint.setColor(Color.MAGENTA);
+                    }
+                    else if (tab[j][i] == 5) {
+                        testPaint.setColor(Color.CYAN);
+                    }
+                    else if (tab[j][i] == 6) {
+                        testPaint.setColor(Color.BLACK);
+                    }
                     else {
                         testPaint.setColor(Color.GREEN);
                     }
 
+                    if (i != xx || j != yy) {
+                        testCanv.drawRect(x, y, x + taille, y + taille, testPaint);
+                    }
+                    else {
+                        testPaint.setColor(Color.BLACK);
+                        testCanv.drawRect(x, y, x + taille, y + taille, testPaint);
+                    }
 
-                    testCanv.drawRect(x, y, x+taille, y+taille, testPaint);
+
                     x = x + espacement;
                 }
 
                 y = y + espacement;
             }
 
+            /*
+
+            paintcoord.setStyle(Paint.Style.FILL);
+            paintcoord.setColor(Color.BLACK);
+            testCanv.drawRect(initialX, initialY, initialX+taille, initialY+taille, paintcoord);
+            //testCanv.drawRect(x, y, x+taille, y+taille, testPaint);
+            */
 
 
         }
