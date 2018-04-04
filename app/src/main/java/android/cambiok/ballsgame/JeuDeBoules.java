@@ -73,6 +73,16 @@ public class JeuDeBoules extends AppCompatActivity {
                     xx = (int) initialX / 107;
                     yy = (int) initialY / 107;
 
+                    if (xx >= 0 && xx < 10 && yy >= 0 && yy < 13) {
+                        GameEngine.CleanTabMemoire();
+                        GameEngine.TrouverVoisin(yy, xx);
+                        GameEngine.skynet();
+                    }
+
+
+
+
+
 
                  Log.d("MYINT", "value: " + xx);
                  Log.d("MYINT2", "value: " + yy);
@@ -108,6 +118,7 @@ public class JeuDeBoules extends AppCompatActivity {
             // z = bot
 
             int tab [][]= GameEngine.getTableau();
+            int Selectedtab [][]= GameEngine.getSelectedTableau();
 
 
             int espacement = 107;
@@ -123,7 +134,10 @@ public class JeuDeBoules extends AppCompatActivity {
 
                     testPaint.setStyle(Paint.Style.FILL);
 
-                    if (tab[j][i] == 1) {
+                    if (tab[j][i] == 0) {
+                        testPaint.setColor(Color.GREEN);
+                    }
+                    else if (tab[j][i] == 1) {
                         testPaint.setColor(Color.BLUE);
                     }
                     else if (tab[j][i] == 2) {
@@ -142,15 +156,18 @@ public class JeuDeBoules extends AppCompatActivity {
                         testPaint.setColor(Color.BLACK);
                     }
                     else {
-                        testPaint.setColor(Color.GREEN);
+                        //testPaint.setColor(Color.GREEN);
                     }
 
-                    if (i != xx || j != yy) {
-                        testCanv.drawRect(x, y, x + taille, y + taille, testPaint);
-                    }
-                    else {
-                        testPaint.setColor(Color.BLACK);
-                        testCanv.drawRect(x, y, x + taille, y + taille, testPaint);
+                    if (tab[j][i] != -1) {
+                        if (Selectedtab[j][i] == 1) {
+                            // selectionné
+                            testPaint.setColor(Color.BLACK);
+                            testCanv.drawRect(x, y, x + taille, y + taille, testPaint);
+                        } else {
+                            // non selectionné
+                            testCanv.drawRect(x, y, x + taille, y + taille, testPaint);
+                        }
                     }
 
 

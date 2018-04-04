@@ -50,6 +50,7 @@ public class Game {
     public void setTailleY(int taille) {tailleY = taille;}
 
     public int [][] getTableau() {return Tableau;}
+    public int [][] getSelectedTableau() {return SelectedTableau;}
 
     public Game(int tailleX, int tailleY) { // Constructeur
         int x, y;
@@ -92,55 +93,31 @@ public class Game {
             }
         }
     }
-/*
-    // Cherche un passage entre deux pts
-    boolean PathValid (int x1, int y1, int x2, int y2) {
-        int x, y;
-        // Création tableau mémoire
-        int TableauMemoire[][];
-        TableauMemoire = new int[getTailleX()][getTailleY()];
 
-        // On met les cases à 0, elles n'ont pas été visités
-        for (x = 0; x < tailleX; x++) {
-            for (y = 0; y < tailleY; y++) {
+    void CleanTabMemoire() {
+        int x, y;
+
+        for (x = 0; x < getTailleX(); x++) {
+            for (y = 0; y < getTailleY(); y++){
                 TableauMemoire[x][y] = 0;
+                SelectedTableau[x][y] = 0;
             }
         }
-
-
-        while (i < 50) {
-
-            if (true)
-                return true;
-
-            i++;
-        }
-
-        return false;
     }
 
-    // Fonction qui met à jour SelectedTableau
-    void TrouverVoisin(int x, int y) {
-        boolean PathValid;
-        int i, j;
+    public void skynet() {
+        int x, y;
 
-        for (i = 0; i < tailleX; i++) {
-            for (j = 0; j < tailleY; j++) {
-
-                PathValid = PathValid(x, y, i, j);
-
-                if (PathValid) {
-                    SelectedTableau[i][j] = 1;
-                } else {
-                    SelectedTableau[i][j] = 0;
+        for (x = 0; x < getTailleX(); x++) {
+            for (y = 0; y < getTailleY(); y++){
+                if (SelectedTableau[x][y] == 1) {
+                    setCaseColor(x, y, -1);
                 }
             }
         }
     }
 
-    */
-
-    void TrouverVoisin(int x, int y) {
+    public void TrouverVoisin(int x, int y) {
         // On me donne un point x et y.
         // 1. J'inscrit ce pt en mémoire
 
@@ -149,39 +126,44 @@ public class Game {
         // 4. Je vérifie l'est
         // 5. Je vérifie le sud
 
-        TableauMemoire[x][y] = 1;
 
-        // On vérifie les quatre voisins autour.
-        if ((x + 1) < getTailleX() && (GetCaseColor(x, y) == GetCaseColor(x + 1, y)) && TableauMemoire[x + 1][y] == 0) {
-            SelectedTableau[x + 1][y] = 1;
-            TrouverVoisin(x + 1, y);
-        }
+        if (GetCaseColor(x, y) != -1) {
 
-        if ((x + 1) < getTailleX() && (GetCaseColor(x, y) == GetCaseColor(x - 1, y)) && TableauMemoire[x - 1][y] == 0) {
-            SelectedTableau[x - 1][y] = 1;
-            TrouverVoisin(x - 1, y);
-        }
+            TableauMemoire[x][y] = 1;
+            SelectedTableau[x][y] = 1;
 
-        if ((y + 1) < getTailleY() && (GetCaseColor(x, y) == GetCaseColor(x, y + 1)) && TableauMemoire[x][y + 1] == 0) {
-            SelectedTableau[x][y + 1] = 1;
-            TrouverVoisin(x, y + 1);
-        }
+            // On vérifie les quatre voisins autour.
+            if ((x + 1) < getTailleX() && (GetCaseColor(x, y) == GetCaseColor(x + 1, y)) && TableauMemoire[x + 1][y] == 0) {
+                SelectedTableau[x + 1][y] = 1;
+                TrouverVoisin(x + 1, y);
+            }
 
-        if ((y - 1) < getTailleY() && (GetCaseColor(x, y) == GetCaseColor(x, y - 1)) && TableauMemoire[x][y - 1] == 0) {
-            SelectedTableau[x][y - 1] = 1;
-            TrouverVoisin(x, y - 1);
+            if ((x - 1) >= 0 && (GetCaseColor(x, y) == GetCaseColor(x - 1, y)) && TableauMemoire[x - 1][y] == 0) {
+                SelectedTableau[x - 1][y] = 1;
+                TrouverVoisin(x - 1, y);
+            }
+
+            if ((y + 1) < getTailleY() && (GetCaseColor(x, y) == GetCaseColor(x, y + 1)) && TableauMemoire[x][y + 1] == 0) {
+                SelectedTableau[x][y + 1] = 1;
+                TrouverVoisin(x, y + 1);
+            }
+
+            if ((y - 1) >= 0 && (GetCaseColor(x, y) == GetCaseColor(x, y - 1)) && TableauMemoire[x][y - 1] == 0) {
+                SelectedTableau[x][y - 1] = 1;
+                TrouverVoisin(x, y - 1);
+            }
         }
     }
 
     int GetCaseColor(int x, int y) {
-        if ((x >= 0 && x < getTailleX()) && (y >= 0 && y <= getTailleY()))
+        if ((x >= 0 && x < getTailleX()) && (y >= 0 && y < getTailleY()))
             return Tableau[x][y];
         else
             return 0;
     }
 
     void setCaseColor(int x, int y, int color) {
-        if ((x >= 0 && x < getTailleX()) && (y >= 0 && y <= getTailleY()))
+        if ((x >= 0 && x < getTailleX()) && (y >= 0 && y < getTailleY()))
             Tableau[x][y] = color;
     }
 
