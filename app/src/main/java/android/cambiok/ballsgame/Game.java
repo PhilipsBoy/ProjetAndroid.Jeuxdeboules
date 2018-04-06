@@ -210,7 +210,7 @@ public class Game {
                 if (GetCaseColor(x, y) == -1) {
                     // On decale tous vers le bas
 
-                    for (x2 = x; x2 >= 0; x2--) {
+                    for (x2 = x; x2 + 1 < getTailleX(); x2++) {
 
                         // On recupère la couleur de la case de dessus
                         if ((x2 + 1) < getTailleX()) {
