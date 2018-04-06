@@ -235,11 +235,11 @@ public class Game {
             }
 
             if (colonnevide == 1) {
-                for (x2 = 0; x2 < getTailleX(); x++) {
-                    if ((x2 - 1) >= 0) {
-                        color = GetCaseColor(x - 1, y);
-                        setCaseColor(x, y, color);
-                        setCaseColor(x - 1, y, -1);
+                for (x2 = 0; x2 < getTailleX(); x2++) {
+                    if ((y - 1) >= 0) {
+                        color = GetCaseColor(x2, y - 1);
+                        setCaseColor(x2, y, color);
+                        setCaseColor(x2, y - 1, -1);
                     }
                 }
             }
