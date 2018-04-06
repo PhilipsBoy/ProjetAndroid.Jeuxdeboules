@@ -212,7 +212,7 @@ public class Game {
                     x2 = x;
                     y2 = y;
 
-                    for (x2 = x; x2 >= 0; x2++) {
+                    for (x2 = x; x2 >= 0; x2--) {
                         if (x2 - 1 >= 0) {
                             color = GetCaseColor(x2 - 1, y2);
                             setCaseColor(x2, y2, color);
