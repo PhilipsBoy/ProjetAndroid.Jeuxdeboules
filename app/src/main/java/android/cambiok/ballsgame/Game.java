@@ -208,11 +208,25 @@ public class Game {
         for (x = getTailleX() - 1; x >= 0; x--) {
             for (y = getTailleY() - 1; y >= 0; y--) {
                 if (GetCaseColor(x, y) == -1) {
+
                     // On decale tous vers le bas
+                    for (x2 = 0; x2 >= x; x2++) {
+                        if (x2 + 1 >= getTailleX()) {
+                            // On recupère la couleur de la case de dessus
+                            color = GetCaseColor(x2 + 1, y);
 
+                            // On l'applique à la case actuelle
+                            setCaseColor(x, y, color);
+
+                            // On vide la case du dessus
+                            setCaseColor(x2 + 1, y, -1);
+                        }
+                    }
+
+
+                    /*
+                    // On decale tous vers la droite
                     for (x2 = x; x2 >= 0; x2--) {
-
-
                         if (x2 - 1 >= 0) {
                             // On recupère la couleur de la case de dessus
                             color = GetCaseColor(x2 - 1, y);
@@ -223,8 +237,9 @@ public class Game {
                             // On vide la case du dessus
                             setCaseColor(x2 - 1, y, -1);
                         }
-
                     }
+
+                    */
                 }
             }
         }
