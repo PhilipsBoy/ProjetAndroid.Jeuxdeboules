@@ -199,6 +199,11 @@ public class Game {
         int x, y;
         int x2, y2;
 
+        int color = 0;
+
+        // GetCaseColor(x, y);
+        // SetCaseColor(x, y, color);
+
         // Decalage vers le bas
         for (x = getTailleX() - 1; x >= 0; x--) {
             for (y = getTailleY() - 1; y >= 0; y--) {
@@ -206,8 +211,17 @@ public class Game {
                     // On decale tous vers le bas
 
                     for (y2 = y; y >= 0; y--) {
-                        Tableau[x][y2] = Tableau[x][y2+1];
-                        Tableau[x][y2+1] = -1;
+
+                        // On recupère la couleur de la case de dessus
+                        if ((y2 + 1) < getTailleY()) {
+                            color = GetCaseColor(x, y2 + 1);
+
+                            // On l'applique à la case actuelle
+                            setCaseColor(x, y, color);
+
+                            // On vide la case du dessus
+                            setCaseColor(x, y2 + 1, -1);
+                        }
                     }
                 }
             }
