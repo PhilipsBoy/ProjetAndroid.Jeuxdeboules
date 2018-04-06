@@ -77,11 +77,13 @@ public class JeuDeBoules extends AppCompatActivity {
                     if (xx_tmp >= 0 && xx_tmp < 10 && yy_tmp >= 0 && yy_tmp < 13) {
 
                         if (GameEngine.getSelectedScore() > 0) { // Si déjà selectionné
-                            if (xx == xx_tmp && yy == yy_tmp) {
+                            if (GameEngine.SelectedTableau[yy_tmp][xx_tmp] == 1) {
                                 xx = xx_tmp;
                                 yy = yy_tmp;
 
+                                GameEngine.skynet();
                                 GameEngine.CleanTabMemoire();
+
                             }
                             else {
                                 xx = xx_tmp;
