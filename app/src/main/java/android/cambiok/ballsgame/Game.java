@@ -117,6 +117,21 @@ public class Game {
         }
     }
 
+    public int getSelectedScore() {
+        int score = 0;
+        int x, y;
+
+        for (x = 0; x < getTailleX(); x++) {
+            for (y = 0; y < getTailleY(); y++){
+                if (SelectedTableau[x][y] == 1) {
+                    score = score + 1;
+                }
+            }
+        }
+
+        return score;
+    }
+
     public void TrouverVoisin(int x, int y) {
         // On me donne un point x et y.
         // 1. J'inscrit ce pt en mémoire
