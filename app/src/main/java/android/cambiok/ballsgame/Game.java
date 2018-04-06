@@ -194,4 +194,26 @@ public class Game {
         }
     }
 
+    // Mise à jour du tableau de jeu.
+    void updateGame() {
+        int x, y;
+        int x2, y2;
+
+        // Decalage vers le bas
+        for (x = getTailleX() - 1; x >= 0; x--) {
+            for (y = getTailleY() - 1; y >= 0; y--) {
+                if (GetCaseColor(x, y) == -1) {
+                    // On decale tous vers le bas
+
+                    for (y2 = y; y >= 0; y--) {
+                        Tableau[x][y2] = Tableau[x][y2+1];
+                        Tableau[x][y2+1] = -1;
+                    }
+                }
+            }
+        }
+
+        // Decalage vers la droite
+    }
+
 }
