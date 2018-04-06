@@ -83,6 +83,7 @@ public class JeuDeBoules extends AppCompatActivity {
 
                                 GameEngine.skynet();
                                 GameEngine.CleanTabMemoire();
+                                GameEngine.updateGame();
 
                             }
                             else {
