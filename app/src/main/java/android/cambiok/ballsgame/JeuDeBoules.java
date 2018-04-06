@@ -33,6 +33,7 @@ public class JeuDeBoules extends AppCompatActivity {
     float initialX, initialY;
 
     int xx, yy;
+    int xx_tmp, yy_tmp;
 
     int taille = 100;
 
@@ -70,13 +71,39 @@ public class JeuDeBoules extends AppCompatActivity {
                     initialX = event.getX();
                     initialY = event.getY();
 
-                    xx = (int) initialX / 107;
-                    yy = (int) initialY / 107;
+                    xx_tmp = (int) initialX / 107;
+                    yy_tmp = (int) initialY / 107;
 
-                    if (xx >= 0 && xx < 10 && yy >= 0 && yy < 13) {
-                        GameEngine.CleanTabMemoire();
-                        GameEngine.TrouverVoisin(yy, xx);
-                        GameEngine.skynet();
+                    if (xx_tmp >= 0 && xx_tmp < 10 && yy_tmp >= 0 && yy_tmp < 13) {
+
+                        if (GameEngine.getSelectedScore() > 0) { // Si déjà selectionné
+                            if (xx == xx_tmp && yy == yy_tmp) {
+                                xx = xx_tmp;
+                                yy = yy_tmp;
+
+                                GameEngine.CleanTabMemoire();
+                            }
+                            else {
+                                xx = xx_tmp;
+                                yy = yy_tmp;
+
+                                GameEngine.CleanTabMemoire();
+                                GameEngine.TrouverVoisin(yy, xx);
+                            }
+                        }
+
+                        else { // Sinon, rien de selectionné
+                            xx = xx_tmp;
+                            yy = yy_tmp;
+
+                            GameEngine.CleanTabMemoire();
+                            GameEngine.TrouverVoisin(yy, xx);
+                            //GameEngine.skynet();
+                        }
+
+
+
+
                     }
 
 
