@@ -205,6 +205,25 @@ public class Game {
         // SetCaseColor(x, y, color);
 
         // Decalage vers le bas
+
+        for (y = 0; y < getTailleY(); y++) {
+            for (x = 0; x < getTailleX(); x++) {
+                if (GetCaseColor(x, y) == -1) {
+                    x2 = x;
+                    y2 = y;
+
+                    for (x2 = x; x2 >= 0; x2++) {
+                        if (x2 - 1 >= 0) {
+                            color = GetCaseColor(x2 - 1, y2);
+                            setCaseColor(x2, y2, color);
+                            setCaseColor(x2 - 1, y2, -1);
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
         for (x = getTailleX() - 1; x >= 0; x--) {
             for (y = getTailleY() - 1; y >= 0; y--) {
                 if (GetCaseColor(x, y) == -1) {
@@ -222,6 +241,10 @@ public class Game {
                             setCaseColor(x2 - 1, y, -1);
                         }
                     }
+                }
+            }
+        }
+        */
 
 
                     /*
@@ -240,9 +263,7 @@ public class Game {
                     }
 
                     */
-                }
-            }
-        }
+
 
         // Decalage vers la droite
     }
