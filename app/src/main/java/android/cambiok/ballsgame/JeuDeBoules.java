@@ -37,7 +37,7 @@ public class JeuDeBoules extends AppCompatActivity {
 
     int taille = 100;
 
-    Game GameEngine = new Game(13, 10);
+    Game GameEngine = new Game(13, 10, 0);
 
 
     @Override
