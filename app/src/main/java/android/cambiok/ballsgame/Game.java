@@ -30,18 +30,8 @@ public class Game {
 
     int TableauMemoire[][];
 
-
     // Joueur Joueur1;
     // Joueur Joueur2;
-
-    // Liste des méthodes :
-    // generateRandomGameTab
-    // getTab x
-    // InitTab x
-    // GetCaseColor x
-    // setCaseCpmpr x
-    // UpdateTab
-    // TrouverVoisin
 
     public int getTailleX() {return tailleX;}
     public int getTailleY() {return tailleY;}
@@ -182,8 +172,6 @@ public class Game {
             Tableau[x][y] = color;
     }
 
-
-
     void initTableau()  {
         int x, y;
 
@@ -200,7 +188,7 @@ public class Game {
         int x2, y2;
 
         int color = 0;
-        int colonnevide = 0;
+        boolean colonnevide;
 
         // GetCaseColor(x, y);
         // SetCaseColor(x, y, color);
@@ -223,23 +211,27 @@ public class Game {
             }
         }
 
-        // Decalage vers la droite
-        for (y = getTailleY(); y >= 0; y--) {
+        // Decallage à droite
+        for (y = getTailleY() - 1; y >= 0; y--) {
+            // On regarde si la colonne y est "vide" (= remplie de -1).
+            colonnevide = true;
 
-            colonnevide = 1;
-
-            for (x = getTailleX(); x >= 0; x--) {
+            for (x = 0; x < getTailleX(); x++) {
                 if (GetCaseColor(x, y) != -1) {
-                    colonnevide = 0;
+                    colonnevide = false;
                 }
             }
 
-            if (colonnevide == 1) {
-                for (x2 = 0; x2 < getTailleX(); x2++) {
-                    if ((y - 1) >= 0) {
-                        color = GetCaseColor(x2, y - 1);
-                        setCaseColor(x2, y, color);
-                        setCaseColor(x2, y - 1, -1);
+            // La colone était-elle vide?
+            if (colonnevide == true) {
+                // Oui : on decale toutes les colones se trouvant à gauche.
+                for (y2 = y; y2 >= 0; y2--) {
+                    for (x2 = 0; x2 < getTailleX(); x2++) {
+                        if ((y2 - 1) >= 0) {
+                            color = GetCaseColor(x2, y2 - 1);
+                            setCaseColor(x2, y2, color);
+                            setCaseColor(x2, y2 - 1, -1);
+                        }
                     }
                 }
             }
