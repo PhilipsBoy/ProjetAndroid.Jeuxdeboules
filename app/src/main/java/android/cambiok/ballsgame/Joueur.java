@@ -8,8 +8,9 @@ public class Joueur {
     int score;
     String Name;
 
-    public Joueur() { // Constructeur
+    public Joueur(String name) { // Constructeur
         setScore(0);
+        setName(name);
     }
 
     int getScore() {return score;}
