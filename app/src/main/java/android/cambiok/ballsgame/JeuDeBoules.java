@@ -37,7 +37,7 @@ public class JeuDeBoules extends AppCompatActivity {
 
     int taille = 100;
 
-    Game GameEngine = new Game(13, 10);
+    Game GameEngine = new Game(13, 10, 0);
 
 
     @Override
@@ -75,47 +75,8 @@ public class JeuDeBoules extends AppCompatActivity {
                     yy_tmp = (int) initialY / 107;
 
                     if (xx_tmp >= 0 && xx_tmp < 10 && yy_tmp >= 0 && yy_tmp < 13) {
-
-                        if (GameEngine.getSelectedScore() > 0) { // Si déjà selectionné
-                            if (GameEngine.SelectedTableau[yy_tmp][xx_tmp] == 1) {
-                                xx = xx_tmp;
-                                yy = yy_tmp;
-
-                                GameEngine.skynet();
-                                GameEngine.CleanTabMemoire();
-                                GameEngine.updateGame();
-
-                            }
-                            else {
-                                xx = xx_tmp;
-                                yy = yy_tmp;
-
-                                GameEngine.CleanTabMemoire();
-                                GameEngine.TrouverVoisin(yy, xx);
-                            }
-                        }
-
-                        else { // Sinon, rien de selectionné
-                            xx = xx_tmp;
-                            yy = yy_tmp;
-
-                            GameEngine.CleanTabMemoire();
-                            GameEngine.TrouverVoisin(yy, xx);
-                            //GameEngine.skynet();
-                        }
-
-
-
-
+                        GameEngine.updateGameState(yy_tmp, xx_tmp);
                     }
-
-
-
-
-
-
-                 Log.d("MYINT", "value: " + xx);
-                 Log.d("MYINT2", "value: " + yy);
 
                     break;
 

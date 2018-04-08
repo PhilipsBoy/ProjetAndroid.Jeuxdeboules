@@ -6,21 +6,10 @@ import java.util.Random;
  * Created by bat on 07/03/2018.
  */
 
-/*
-Variables à faire :
-    - Joueur 1 & Joueur 2
-    - Tableau
-    -
-
-Methodes à faire :
-    - GenerationAleatoireTableau
-    - TrouverVoisin
-    - ResetGame
-*/
-
 public class Game {
     int Tableau[][];
     int SelectedTableau[][];
+    int TableauMemoire[][];
 
     int selectedx;
     int selectedy;
@@ -28,20 +17,89 @@ public class Game {
     int tailleX;
     int tailleY;
 
-    int TableauMemoire[][];
+    Joueur Joueur1;
+    Joueur Joueur2;
+
+    // Game mode
+    // 0 : 1 joueur
+    // 1 : 2 joueurs
+    // autre : erreur
+    int GameMode;
+
+    // Game State
+    // Si Game mode = 0
+    // 0 : tableau non vide + non bloqué
+    //  -> on attend un click sur un ensemble de block
+    //  -> un click sur un block a pour effet de le sectionner
+    // 1 : tableau non vide + bloqué
+    //  -> Le joueur est bloqué, gameover, on enregistre son score dans MeilleurScore
+    // 2 : tableau vide
+    //  -> on regenre un tableau avec augmentation de la difficulté
+    // Si Game mode = 1
+    // 0 :
+    // 1 :
+    // 2 :
+    int GameState;
 
 
-    // Joueur Joueur1;
-    // Joueur Joueur2;
 
-    // Liste des méthodes :
-    // generateRandomGameTab
-    // getTab x
-    // InitTab x
-    // GetCaseColor x
-    // setCaseCpmpr x
-    // UpdateTab
-    // TrouverVoisin
+
+    public int updateGameState(int x, int y) {
+        int mode = getGameMode();
+        int state = getGameState();
+
+        // mode 1 joueur
+        if (mode == 0) {
+            switch (state) {
+                case 0: // tableau non vide et non bloqué
+                    if (getSelectedScore() > 0) { // Double click?
+                        if (SelectedTableau[x][y] == 1) { // Le joueur click sur un block déjà selectionné.
+                            skynet(); // On elimine ce block
+                            CleanTabMemoire(); // On nettoie le tableau memoire
+                            updateGame(); // On fait tomber les cases
+                        }
+                        else { // Le joueur click sur un nouvel ensemble de block.
+                            CleanTabMemoire();
+                            TrouverVoisin(x, y);
+                        }
+                    }
+
+                    else { // Rien de selectionné
+
+                        CleanTabMemoire();
+                        TrouverVoisin(x, y);
+                    }
+
+                    // Mise à jour du game state
+                    //
+
+                    break;
+                case 1:
+                    ;
+                    break;
+                default:
+                    setGameState(0);
+                    break;
+            }
+        }
+
+        // mode 2 joueurs
+        else {
+            switch (state) {
+                case 0:
+                    ;
+                    break;
+                case 1:
+                    ;
+                    break;
+                default:
+                    setGameState(0);
+                    break;
+            }
+        }
+
+        return getGameState();
+    }
 
     public int getTailleX() {return tailleX;}
     public int getTailleY() {return tailleY;}
@@ -49,14 +107,42 @@ public class Game {
     public void setTailleX(int taille) {tailleX = taille;}
     public void setTailleY(int taille) {tailleY = taille;}
 
+    public int getGameMode() {return GameMode;}
+    public int getGameState() {return GameState;}
+
+    public void setGameMode(int mode) {
+
+        if (mode == 0 || mode == 1)
+            GameMode = mode;
+        else
+            GameMode = 0;
+
+        // Reset Tableau et elements de jeux
+        Joueur1.setScore(0);
+        Joueur2.setScore(0);
+
+        setGameState(0);
+
+        GenerationAleatoireTableau(3);
+        CleanTabMemoire();
+    }
+
+    public void setGameState(int state) {GameState = state;}
+
     public int [][] getTableau() {return Tableau;}
     public int [][] getSelectedTableau() {return SelectedTableau;}
 
-    public Game(int tailleX, int tailleY) { // Constructeur
+    public Game(int tailleX, int tailleY, int gameMode) { // Constructeur
         int x, y;
 
         setTailleX(tailleX);
         setTailleY(tailleY);
+
+        setGameMode(gameMode);
+        setGameState(0);
+
+        Joueur1 = new Joueur("Joueur1");
+        Joueur2 = new Joueur("Joueur2");
 
         selectedx = 0;
         selectedy = 0;
@@ -68,14 +154,7 @@ public class Game {
         GenerationAleatoireTableau(3);
 
         // Mise à zéro tableau selection
-        for (x = 0; x < tailleX; x++) {
-            for (y = 0; y < tailleY; y++) {
-                SelectedTableau[x][y] = 0;
-                TableauMemoire = new int[getTailleX()][getTailleY()];
-            }
-        }
-
-
+        CleanTabMemoire();
     }
 
     // void GenerationAleatoireTableau(int difficulte) {
@@ -182,8 +261,6 @@ public class Game {
             Tableau[x][y] = color;
     }
 
-
-
     void initTableau()  {
         int x, y;
 
@@ -200,7 +277,7 @@ public class Game {
         int x2, y2;
 
         int color = 0;
-        int colonnevide = 0;
+        boolean colonnevide;
 
         // GetCaseColor(x, y);
         // SetCaseColor(x, y, color);
@@ -223,26 +300,33 @@ public class Game {
             }
         }
 
-        // Decalage vers la droite
-        for (y = getTailleY(); y >= 0; y--) {
+        /*
+        // Decallage à droite
+        for (y = getTailleY() - 1; y >= 0; y--) {
+            // On regarde si la colonne y est "vide" (= remplie de -1).
+            colonnevide = true;
 
-            colonnevide = 1;
-
-            for (x = getTailleX(); x >= 0; x--) {
+            for (x = 0; x < getTailleX(); x++) {
                 if (GetCaseColor(x, y) != -1) {
-                    colonnevide = 0;
+                    colonnevide = false;
                 }
             }
 
-            if (colonnevide == 1) {
-                for (x2 = 0; x2 < getTailleX(); x2++) {
-                    if ((y - 1) >= 0) {
-                        color = GetCaseColor(x2, y - 1);
-                        setCaseColor(x2, y, color);
-                        setCaseColor(x2, y - 1, -1);
+            // La colone était-elle vide?
+            if (colonnevide == true) {
+                // Oui : on decale toutes les colones se trouvant à gauche.
+                for (y2 = y; y2 >= 0; y2--) {
+                    for (x2 = 0; x2 < getTailleX(); x2++) {
+                        if ((y2 - 1) >= 0) {
+                            color = GetCaseColor(x2, y2 - 1);
+                            setCaseColor(x2, y2, color);
+                            setCaseColor(x2, y2 - 1, -1);
+                        }
                     }
                 }
             }
         }
+
+        */
     }
 }
