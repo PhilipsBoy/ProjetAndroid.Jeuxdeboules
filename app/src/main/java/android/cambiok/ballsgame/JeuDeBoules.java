@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,8 +22,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
-
-
+import android.widget.TableLayout;
+import android.widget.TextView;
 
 
 public class JeuDeBoules extends AppCompatActivity {
@@ -31,26 +32,32 @@ public class JeuDeBoules extends AppCompatActivity {
     private Paint testPaint = new Paint();
     private Paint paintcoord = new Paint();
     float initialX, initialY;
+    private ImageView plateau;
 
     int xx, yy;
     int xx_tmp, yy_tmp;
 
     int taille = 100;
 
-    Game GameEngine = new Game(13, 10, 0);
+    Game GameEngine;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new MyView(this));
+        //setContentView(R.layout.activity_jeu_de_boules);
+        //plateau = (ImageView) findViewById(R.id.MyView);
+        //TextView score = (TextView) findViewById(R.id.textView);
+        //score.setText(0);
+        //TableLayout monLayout = (TableLayout) findViewById(R.id.affich_message_layout);
+        //monLayout.addView(MyView,0);
+        GameEngine = new Game(13, 10, 0);
 
     }
 
     public class MyView extends View {
         Paint paint = null;
-
-
 
 
         public MyView(Context context) {

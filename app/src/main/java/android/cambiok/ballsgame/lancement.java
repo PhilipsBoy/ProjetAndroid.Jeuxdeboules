@@ -34,11 +34,9 @@ int taille;
 
     public void debutPartie(View view) {
 
-
        // if(taille > 0){
-
         Intent intent = new Intent(this, JeuDeBoules.class);
-            startActivity(intent);
+        startActivity(intent);
 
        // }
 

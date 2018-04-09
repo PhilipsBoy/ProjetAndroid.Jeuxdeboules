@@ -118,13 +118,13 @@ public class Game {
             GameMode = 0;
 
         // Reset Tableau et elements de jeux
-        Joueur1.setScore(0);
-        Joueur2.setScore(0);
+        //Joueur1.setScore(0);
+        //Joueur2.setScore(0);
 
-        setGameState(0);
+        //setGameState(0);
 
-        GenerationAleatoireTableau(3);
-        CleanTabMemoire();
+        //GenerationAleatoireTableau(3);
+        //CleanTabMemoire();
     }
 
     public void setGameState(int state) {GameState = state;}
@@ -154,7 +154,12 @@ public class Game {
         GenerationAleatoireTableau(3);
 
         // Mise à zéro tableau selection
-        CleanTabMemoire();
+        for (x = 0; x < tailleX; x++) {
+            for (y = 0; y < tailleY; y++) {
+                SelectedTableau[x][y]  = 0;
+                TableauMemoire = new int[getTailleX()][getTailleY()];
+            }
+        }
     }
 
     // void GenerationAleatoireTableau(int difficulte) {
@@ -300,7 +305,7 @@ public class Game {
             }
         }
 
-        /*
+
         // Decallage à droite
         for (y = getTailleY() - 1; y >= 0; y--) {
             // On regarde si la colonne y est "vide" (= remplie de -1).
@@ -326,7 +331,5 @@ public class Game {
                 }
             }
         }
-
-        */
     }
 }

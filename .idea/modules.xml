@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ProjetJava.iml" filepath="$PROJECT_DIR$/ProjetJava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Projet Android - Jeux de boules.iml" filepath="$PROJECT_DIR$/Projet Android - Jeux de boules.iml" />
+      <module fileurl="file://C:\Users\310218527\OneDrive - Philips\PPS\5A\Projet Android - Jeux de boules\ProjetJava.iml" filepath="C:\Users\310218527\OneDrive - Philips\PPS\5A\Projet Android - Jeux de boules\ProjetJava.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
