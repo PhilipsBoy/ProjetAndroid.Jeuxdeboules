@@ -33,7 +33,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/start"
-            android:onClick="debutPartie"/>
+            android:onClick="debutPartie1Joueur"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start2"
+            android:onClick="debutPartie2Joueur"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/scoring"
+            android:onClick="meilleursscores"/>
 
 
 

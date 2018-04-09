@@ -32,7 +32,7 @@ int taille;
 
     }
 
-    public void debutPartie(View view) {
+    public void debutPartie1Joueur(View view) {
 
        // if(taille > 0){
         Intent intent = new Intent(this, JeuDeBoules.class);
@@ -41,6 +41,26 @@ int taille;
        // }
 
     }
+
+    public void debutPartie2Joueur(View view) {
+
+        // if(taille > 0){
+        Intent intent = new Intent(this, JeuDeBoules.class);
+        startActivity(intent);
+
+        // }
+    }
+
+    public void meilleursscores (View view) {
+
+        // if(taille > 0){
+        Intent intent = new Intent(this, JeuDeBoules.class);
+        startActivity(intent);
+
+        // }
+    }
+
+
 }
 
 
