@@ -17,28 +17,25 @@ import java.util.jar.Attributes;
 
 public class lancement extends AppCompatActivity {
 
-int taille;
+
+    String taille;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lancement);
-        /*
-        EditText pseudo = findViewById(R.id.pseudo);
-        taille = pseudo.getText().length();
-        TextView qqch = new TextView(this);
-        qqch.setTextSize(50);
-        qqch.setText("" + taille);*/
+        EditText pseudo = (EditText) findViewById(R.id.pseudo);
+        taille = pseudo.getText().toString();
 
     }
 
     public void debutPartie1Joueur(View view) {
 
-       // if(taille > 0){
+       if(taille != null){
         Intent intent = new Intent(this, JeuDeBoules.class);
         startActivity(intent);
 
-       // }
+         }
 
     }
 

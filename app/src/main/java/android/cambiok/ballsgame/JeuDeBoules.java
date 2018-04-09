@@ -25,12 +25,14 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import java.util.jar.Attributes;
+
 
 public class JeuDeBoules extends AppCompatActivity {
 
     private Canvas testCanv;
     private Paint testPaint = new Paint();
-    private Paint paintcoord = new Paint();
+    private Paint painttext = new Paint();
     float initialX, initialY;
     private ImageView plateau;
 
@@ -104,6 +106,10 @@ public class JeuDeBoules extends AppCompatActivity {
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.WHITE);
             testCanv.drawPaint(paint);
+            painttext.setStyle(Paint.Style.FILL);
+            painttext.setColor(Color.BLACK);
+            painttext.setTextSize(55);
+            testCanv.drawText("Nom du joueur", 100, 1550, painttext );
             // Use Color.parseColor to define HTML colors
             //paint.setStrokeWidth(10);
             //paint.setStyle(Paint.Style.STROKE);

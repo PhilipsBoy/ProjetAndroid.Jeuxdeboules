@@ -8,7 +8,7 @@
     tools:context="android.cambiok.ballsgame.lancement"
     tools:showIn="@layout/activity_lancement">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/resauto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -25,13 +25,18 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:layout_width="1dp"
-            android:ems="10"
-            android:hint="@string/Name" />
+            android:ems="12"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="67dp"
+
+            />
 
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="112dp"
             android:text="@string/start"
             android:onClick="debutPartie1Joueur"/>
 
@@ -39,16 +44,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/start2"
+            android:layout_marginTop="250dp"
+            android:layout_marginLeft="67dp"
             android:onClick="debutPartie2Joueur"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/scoring"
+            android:layout_marginTop="300dp"
+            android:layout_marginLeft="112dp"
             android:onClick="meilleursscores"/>
 
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
