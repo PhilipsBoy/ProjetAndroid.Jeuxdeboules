@@ -123,9 +123,16 @@ public class JeuDeBoules extends AppCompatActivity {
             painttext.setStyle(Paint.Style.FILL);
             painttext.setColor(Color.BLACK);
             painttext.setTextSize(50);
+            String fin;
+            if (GameEngine.CheckGameOver2() == 1) {
+                     fin = "oui";
+                } else {
+                    fin = "non";
+                }
+
             testCanv.drawText(GameEngine.Joueur1.getName() + " : " +  String.valueOf(GameEngine.Joueur1.getScore())+" points", 85, 1550, painttext);
             testCanv.drawText("Niveau : " + String.valueOf(GameEngine.getGameLevel()),715, 1550, painttext );
-            testCanv.drawText("Terminé ?: " + String.valueOf(GameEngine.CheckGameOver2()),715, 1650, painttext );
+            testCanv.drawText("Terminé ?: " + fin,715, 1650, painttext );
 
             if(GameEngine.getGameMode() == 1){
                 testCanv.drawText(GameEngine.Joueur2.getName() + " : " +  String.valueOf(GameEngine.Joueur2.getScore())+ " points", 85, 1650, painttext );
