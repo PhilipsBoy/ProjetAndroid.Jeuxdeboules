@@ -57,8 +57,8 @@ public class lancement extends AppCompatActivity {
 
     public void meilleursscores (View view) {
 
-        // if(taille > 0){
-        Intent intent = new Intent(this, JeuDeBoules.class);
+
+        Intent intent = new Intent(this, MeilleurScore.class);
         startActivity(intent);
 
         // }

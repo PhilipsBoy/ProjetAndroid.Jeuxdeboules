@@ -5,6 +5,7 @@
     <string name="Name">Pseudo Joueur1</string>
     <string name="Name2">Pseudo Joueur2</string>
     <string name="score">Score joueur</string>
+    <string name="bestscore">Score joueur</string>
     <string name="plateau">Plateau de jeu</string>
     <string name="accueil">Jeu de Boules</string>
     <string name="start2">Lancer une partie deux joueurs</string>

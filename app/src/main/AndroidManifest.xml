@@ -12,16 +12,12 @@
         <activity
             android:name=".JeuDeBoules"
             android:label="@string/plateau"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".lancement">
-
-        </activity>
+            android:parentActivityName=".lancement"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".lancement"
             android:label="@string/accueil"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
-
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.cambiok.ballsgame.JeuDeBoules" />
@@ -32,6 +28,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".BestScore"
+                  android:label ="@string/bestscore"
+                  android:parentActivityName=".lancement"
+                  android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest><!--

@@ -56,7 +56,7 @@ public class Game {
     public int CheckGameOver() {
         int x, y;
 
-        int gameover = 0;
+        int gameover = 1;
         int score = 1;
 
         for (x = 0; x < tailleX; x++) {
