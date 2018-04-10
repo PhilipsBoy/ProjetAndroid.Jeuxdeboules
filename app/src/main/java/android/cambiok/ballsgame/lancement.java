@@ -18,20 +18,22 @@ import java.util.jar.Attributes;
 public class lancement extends AppCompatActivity {
 
 
-    String taille;
+    String nom;
+    EditText pseudo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lancement);
-        EditText pseudo = (EditText) findViewById(R.id.pseudo);
-        taille = pseudo.getText().toString();
+        pseudo = (EditText) findViewById(R.id.pseudo);
+
+
 
     }
 
     public void debutPartie1Joueur(View view) {
 
-       if(taille != null){
+       if(pseudo.getText().toString().length() > 2){
         Intent intent = new Intent(this, JeuDeBoules.class);
         startActivity(intent);
 

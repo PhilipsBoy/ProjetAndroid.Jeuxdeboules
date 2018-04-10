@@ -55,6 +55,8 @@ public class JeuDeBoules extends AppCompatActivity {
         //TableLayout monLayout = (TableLayout) findViewById(R.id.affich_message_layout);
         //monLayout.addView(MyView,0);
         GameEngine = new Game(13, 10, 0);
+        // GameEngine.Joueur1.setName();
+
 
     }
 
@@ -109,7 +111,7 @@ public class JeuDeBoules extends AppCompatActivity {
             painttext.setStyle(Paint.Style.FILL);
             painttext.setColor(Color.BLACK);
             painttext.setTextSize(55);
-            testCanv.drawText("Nom du joueur", 100, 1550, painttext );
+            testCanv.drawText(GameEngine.Joueur1.getName(), 100, 1550, painttext );
             // Use Color.parseColor to define HTML colors
             //paint.setStrokeWidth(10);
             //paint.setStyle(Paint.Style.STROKE);

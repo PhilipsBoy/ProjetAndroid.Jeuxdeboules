@@ -118,7 +118,7 @@ public class Game {
             GameMode = 0;
 
         // Reset Tableau et elements de jeux
-        //Joueur1.setScore(0);
+        Joueur1.setScore(0);
         //Joueur2.setScore(0);
 
         //setGameState(0);
@@ -138,11 +138,13 @@ public class Game {
         setTailleX(tailleX);
         setTailleY(tailleY);
 
+        Joueur1 = new Joueur("Joueur1");
+        Joueur2 = new Joueur("Joueur2");
+
         setGameMode(gameMode);
         setGameState(0);
 
-        Joueur1 = new Joueur("Joueur1");
-        Joueur2 = new Joueur("Joueur2");
+
 
         selectedx = 0;
         selectedy = 0;
