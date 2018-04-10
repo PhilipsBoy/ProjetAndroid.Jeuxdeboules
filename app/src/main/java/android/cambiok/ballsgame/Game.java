@@ -79,6 +79,7 @@ public class Game {
 
 
     public int updateGameState(int x, int y) {
+        int xx, yy, emptyboard;
         int mode = getGameMode();
         int state = getGameState();
 
@@ -95,6 +96,12 @@ public class Game {
                             updateGame(); // On fait tomber les cases
 
                             varover = CheckGameOver();
+
+                            if (varover == 1) { // game over
+                                ; // Partie terminée
+                            }
+
+                            //
                         }
                         else { // Le joueur click sur un nouvel ensemble de block.
                             CleanTabMemoire();
@@ -112,6 +119,21 @@ public class Game {
 
                         if (getSelectedScore() == 1) // Si une case : on retire la selection.
                              CleanTabMemoire();
+
+                        // Si aucune case, on genere un nouveau niveau
+                        emptyboard = 1;
+                        for (xx = 0; xx < tailleX; xx++) {
+                            for (yy = 0; y < tailleY; yy++) {
+                                if (GetCaseColor(xx, yy) != -1) {
+                                    emptyboard = 0;
+                                }
+                            }
+                        }
+
+                        if (emptyboard == 1) { // On genere nouvelle board
+                            setGameLevel(getGameLevel() + 1);
+                            GenerationAleatoireTableau(getGameLevel());
+                        }
                     }
 
                     // Mise à jour du game state
@@ -200,7 +222,10 @@ public class Game {
         SelectedTableau = new int[getTailleX()][getTailleY()];
         TableauMemoire = new int[getTailleX()][getTailleY()];
 
-        GenerationAleatoireTableau(3);
+
+        setGameLevel(3);
+
+        GenerationAleatoireTableau(getGameLevel());
 
         // Mise à zéro tableau selection
         for (x = 0; x < tailleX; x++) {
