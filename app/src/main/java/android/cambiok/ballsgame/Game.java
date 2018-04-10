@@ -61,12 +61,14 @@ public class Game {
 
         for (x = 0; x < tailleX; x++) {
             for (y = 0; y < tailleY; y++){
-                CleanTabMemoire();
-                TrouverVoisin(x, y);
-                score = getSelectedScore();  // compte selected tab
+                if (GetCaseColor(x, y) != -1) {
+                    CleanTabMemoire();
+                    TrouverVoisin(x, y);
+                    score = getSelectedScore();  // compte selected tab
 
-                if (score != 1)
-                    gameover = 0;
+                    if (score != 1)
+                        gameover = 0;
+                }
             }
         }
 
