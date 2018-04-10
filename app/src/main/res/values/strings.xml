@@ -2,7 +2,8 @@
     <string name="app_name">BallsGame</string>
     <string name="action_settings">Settings</string>
     <string name="start">Lancer une partie</string>
-    <string name="Name">Pseudo Joueur</string>
+    <string name="Name">Pseudo Joueur1</string>
+    <string name="Name2">Pseudo Joueur2</string>
     <string name="score">Score joueur</string>
     <string name="plateau">Plateau de jeu</string>
     <string name="accueil">Jeu de Boules</string>

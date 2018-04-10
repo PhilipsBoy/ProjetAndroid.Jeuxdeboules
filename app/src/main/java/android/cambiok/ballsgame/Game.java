@@ -41,7 +41,37 @@ public class Game {
     // 2 :
     int GameState;
 
+    int GameLevel;
 
+    int varover;
+
+
+    public int CheckGameOver2() {
+        return varover;
+    }
+
+
+    public int CheckGameOver() {
+        int x, y;
+
+        int gameover = 0;
+        int score = 1;
+
+        for (x = 0; x < tailleX; x++) {
+            for (y = 0; y < tailleY; y++){
+                CleanTabMemoire();
+                TrouverVoisin(x, y);
+                score = getSelectedScore();  // compte selected tab
+
+                if (score != 1)
+                    gameover = 0;
+            }
+        }
+
+        CleanTabMemoire();
+
+        return gameover;
+    }
 
 
     public int updateGameState(int x, int y) {
@@ -54,13 +84,20 @@ public class Game {
                 case 0: // tableau non vide et non bloqué
                     if (getSelectedScore() > 0) { // Double click?
                         if (SelectedTableau[x][y] == 1) { // Le joueur click sur un block déjà selectionné.
+                            Joueur1.setScore(Joueur1.getScore() + getSelectedScore()*1000);
+
                             skynet(); // On elimine ce block
                             CleanTabMemoire(); // On nettoie le tableau memoire
                             updateGame(); // On fait tomber les cases
+
+                            varover = CheckGameOver();
                         }
                         else { // Le joueur click sur un nouvel ensemble de block.
                             CleanTabMemoire();
                             TrouverVoisin(x, y);
+
+                           if (getSelectedScore() == 1) // Si une case : on retire la selection.
+                              CleanTabMemoire();
                         }
                     }
 
@@ -68,6 +105,9 @@ public class Game {
 
                         CleanTabMemoire();
                         TrouverVoisin(x, y);
+
+                        if (getSelectedScore() == 1) // Si une case : on retire la selection.
+                             CleanTabMemoire();
                     }
 
                     // Mise à jour du game state
@@ -106,6 +146,9 @@ public class Game {
 
     public void setTailleX(int taille) {tailleX = taille;}
     public void setTailleY(int taille) {tailleY = taille;}
+
+    public int getGameLevel() {return GameLevel;}
+    public void setGameLevel(int GameLevel) {GameLevel = GameLevel;}
 
     public int getGameMode() {return GameMode;}
     public int getGameState() {return GameState;}

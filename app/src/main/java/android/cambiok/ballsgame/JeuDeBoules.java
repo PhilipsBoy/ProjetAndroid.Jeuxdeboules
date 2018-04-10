@@ -54,8 +54,20 @@ public class JeuDeBoules extends AppCompatActivity {
         //score.setText(0);
         //TableLayout monLayout = (TableLayout) findViewById(R.id.affich_message_layout);
         //monLayout.addView(MyView,0);
-        GameEngine = new Game(13, 10, 0);
-        // GameEngine.Joueur1.setName();
+        Bundle extras2 = getIntent().getExtras();
+        int mode;
+        mode = extras2.getInt("ModeJeu");
+
+        Bundle extras = getIntent().getExtras();
+        Bundle extras3 = getIntent().getExtras();
+
+        String nomJoueur1, nomJoueur2;
+        nomJoueur1 = extras.getString("Name");
+        nomJoueur2 = extras3.getString("Name2");
+
+        GameEngine = new Game(13, 10, mode);
+        GameEngine.Joueur1.setName(nomJoueur1);
+        GameEngine.Joueur2.setName(nomJoueur2);
 
 
     }
@@ -111,7 +123,14 @@ public class JeuDeBoules extends AppCompatActivity {
             painttext.setStyle(Paint.Style.FILL);
             painttext.setColor(Color.BLACK);
             painttext.setTextSize(55);
-            testCanv.drawText(GameEngine.Joueur1.getName(), 100, 1550, painttext );
+            testCanv.drawText(GameEngine.Joueur1.getName() + " : " +  String.valueOf(GameEngine.Joueur1.getScore())+ " points" + String.valueOf(GameEngine.CheckGameOver2()), 100, 1550, painttext );
+
+            if(GameEngine.getGameMode() == 1){
+                testCanv.drawText(GameEngine.Joueur2.getName() + " : " +  String.valueOf(GameEngine.Joueur2.getScore())+ " points", 100, 1650, painttext );
+            }
+
+            GameEngine.updateGame(); // decalages bas & droit
+
             // Use Color.parseColor to define HTML colors
             //paint.setStrokeWidth(10);
             //paint.setStyle(Paint.Style.STROKE);

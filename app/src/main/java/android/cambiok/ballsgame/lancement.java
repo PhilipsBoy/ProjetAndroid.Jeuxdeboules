@@ -19,14 +19,14 @@ public class lancement extends AppCompatActivity {
 
 
     String nom;
-    EditText pseudo;
+    EditText pseudo, pseudo2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lancement);
         pseudo = (EditText) findViewById(R.id.pseudo);
-
+        pseudo2 = (EditText) findViewById(R.id.pseudo2);
 
 
     }
@@ -35,6 +35,8 @@ public class lancement extends AppCompatActivity {
 
        if(pseudo.getText().toString().length() > 2){
         Intent intent = new Intent(this, JeuDeBoules.class);
+        intent.putExtra("Name", pseudo.getText().toString());
+        intent.putExtra("ModeJeu", 0);
         startActivity(intent);
 
          }
@@ -43,11 +45,14 @@ public class lancement extends AppCompatActivity {
 
     public void debutPartie2Joueur(View view) {
 
-        // if(taille > 0){
-        Intent intent = new Intent(this, JeuDeBoules.class);
-        startActivity(intent);
+        if(pseudo.getText().toString().length() > 2 && pseudo2.getText().toString().length() > 2 ) {
+            Intent intent = new Intent(this, JeuDeBoules.class);
+            intent.putExtra("Name", pseudo.getText().toString());
+            intent.putExtra("Name2", pseudo2.getText().toString());
+            intent.putExtra("ModeJeu", 1);
+            startActivity(intent);
+        }
 
-        // }
     }
 
     public void meilleursscores (View view) {

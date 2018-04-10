@@ -26,9 +26,19 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:ems="10"
+            android:layout_marginTop="95dp"
+            android:layout_marginLeft="67dp"
+            android:hint="@string/Name"/>
+
+        <EditText
+            android:id="@+id/pseudo2"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:ems="10"
             android:layout_marginTop="150dp"
             android:layout_marginLeft="67dp"
-            android:hint="@string/Name"
+            android:hint="@string/Name2"
 
             />
 
