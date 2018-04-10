@@ -1,6 +1,6 @@
 // test
 // jjh
-
+// ff
 package android.cambiok.ballsgame;
 
 import android.content.Context;
@@ -123,7 +123,9 @@ public class JeuDeBoules extends AppCompatActivity {
             painttext.setStyle(Paint.Style.FILL);
             painttext.setColor(Color.BLACK);
             painttext.setTextSize(55);
-            testCanv.drawText(GameEngine.Joueur1.getName() + " : " +  String.valueOf(GameEngine.Joueur1.getScore())+ " points" + String.valueOf(GameEngine.CheckGameOver2()), 100, 1550, painttext );
+            testCanv.drawText(GameEngine.Joueur1.getName() + " : " +  String.valueOf(GameEngine.Joueur1.getScore())+" points", 100, 1550, painttext);
+            testCanv.drawText("Difficulté :  " + String.valueOf(GameEngine.getGameLevel()),750, 1550, painttext );
+            testCanv.drawText("Partie terminée :  " + String.valueOf(GameEngine.CheckGameOver2()),750, 1650, painttext );
 
             if(GameEngine.getGameMode() == 1){
                 testCanv.drawText(GameEngine.Joueur2.getName() + " : " +  String.valueOf(GameEngine.Joueur2.getScore())+ " points", 100, 1650, painttext );
