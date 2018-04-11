@@ -18,14 +18,14 @@
         tools:context="android.cambiok.ballsgame.BestScore"
         tools:showIn="@layout/activity_best_score">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tableau">
 
-        </ListView>
-
-
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:id="@+id/tableau"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -20,8 +20,7 @@ public class BestScore extends AppCompatActivity {
     //ListView tab;
 
 
-    String score1, score2, score3, score4, score5, score6, score7;
-    String [] tabScore = {"Coucou", score2, score3, score4, score5, score6, score7};
+    String [] tabScore = {"Coucou"};
 
 
     @Override
@@ -33,10 +32,6 @@ public class BestScore extends AppCompatActivity {
 
         ListView scores = (ListView) findViewById(R.id.tableau);
         scores.setAdapter(adapter);
-
-
-
-
 
     }
 
