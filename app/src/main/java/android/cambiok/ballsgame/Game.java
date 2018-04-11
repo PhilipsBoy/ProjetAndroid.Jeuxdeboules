@@ -47,9 +47,19 @@ public class Game {
 
     int varover;
 
+    int Tour; // Determine quel joueur doit jouer 1->Joueur1, 2->Joueur2
+
 
     public int CheckGameOver2() {
         return varover;
+    }
+
+    public int getTour () {
+        return Tour;
+    }
+
+    public void setTour (int Tourr) {
+        Tour = Tourr;
     }
 
 
@@ -79,94 +89,58 @@ public class Game {
 
 
     public int updateGameState(int x, int y) {
-        int xx, yy, emptyboard;
         int mode = getGameMode();
-        int state = getGameState();
 
         // mode 1 joueur
-        if (mode == 0) {
-            switch (state) {
-                case 0: // tableau non vide et non bloqué
-                    if (getSelectedScore() > 0) { // Double click?
-                        if (SelectedTableau[x][y] == 1) { // Le joueur click sur un block déjà selectionné.
-                            Joueur1.setScore(Joueur1.getScore() + getSelectedScore()*1000);
+        if (mode == 0 || mode == 1) {
+            if (getSelectedScore() > 0) { // Existe t-il déjà des blocs selectionnés
+                if (SelectedTableau[x][y] == 1) { // Le click se trouve t-il sur une case selectionné
 
-                            skynet(); // On elimine ce block
-                            CleanTabMemoire(); // On nettoie le tableau memoire
-                            updateGame(); // On fait tomber les cases
 
-                            varover = CheckGameOver();
+                    skynet(); // Destruction des blocs selectionnes
+                    CleanTabMemoire(); // On nettoie le tableau memoire
 
-                            if (varover == 1) { // game over
-                                if (GetCaseColor(tailleX - 1, tailleY - 1) == -1) {
-                                    setGameLevel(getGameLevel() + 1);
-                                    GenerationAleatoireTableau(getGameLevel());
-                                }
-                            }
+                    // On fait tomber les cases et on les decale
+                    updateGame();
+                    updateGame();
+                    updateGame();
+                    updateGame();
 
-                            // Si aucune case, on genere un nouveau niveau
-                            emptyboard = 1;/*
-                            for (xx = 0; xx < tailleX; xx++) {
-                                for (yy = 0; y < tailleY; yy++) {
-                                    if (GetCaseColor(xx, yy) != -1) {
-                                        emptyboard = 0;
-                                    }
-                                }
-                            }*/
-/*
-                            if (emptyboard == 1) { // On genere nouvelle board
-                                setGameLevel(getGameLevel() + 1);
-                                GenerationAleatoireTableau(4);
-                            }*/
+                    // On verifie si la partie est terminée
+                    varover = CheckGameOver();
 
-                            //
+                    if (varover == 1) { // game over
+                        if (GetCaseColor(tailleX - 1, tailleY - 1) == -1) { // Tableau completement vide?
+                            varover = 0;
+                            setGameLevel(getGameLevel() + 1);
+                            GenerationAleatoireTableau(getGameLevel());
                         }
-                        else { // Le joueur click sur un nouvel ensemble de block.
-                            CleanTabMemoire();
-                            TrouverVoisin(x, y);
 
-                           if (getSelectedScore() == 1) // Si une case : on retire la selection.
-                              CleanTabMemoire();
-                        }
+                        // Si tableau non terminé : on est en attente.
                     }
 
-                    else { // Rien de selectionné
+                    // Si aucune case, on genere un nouveau niveau
+                }
+                else { // Le joueur click sur un nouvel ensemble de block.
+                    CleanTabMemoire();
+                    TrouverVoisin(x, y);
 
-                        CleanTabMemoire();
-                        TrouverVoisin(x, y);
+                   if (getSelectedScore() == 1) // Si la taille du groupe est de une case : on ne selectionne pas.
+                      CleanTabMemoire();
+                }
+            }
 
-                        if (getSelectedScore() == 1) // Si une case : on retire la selection.
-                             CleanTabMemoire();
+            else { // Il n'y a pas de blocs selectionnés
+                CleanTabMemoire();
+                TrouverVoisin(x, y);
 
-
-                    }
-
-                    // Mise à jour du game state
-                    //
-
-                    break;
-                case 1:
-                    ;
-                    break;
-                default:
-                    setGameState(0);
-                    break;
+                if (getSelectedScore() == 1) // Si une case : on annule la selection.
+                     CleanTabMemoire();
             }
         }
 
         // mode 2 joueurs
         else {
-            switch (state) {
-                case 0:
-                    ;
-                    break;
-                case 1:
-                    ;
-                    break;
-                default:
-                    setGameState(0);
-                    break;
-            }
         }
 
         return getGameState();
@@ -218,7 +192,7 @@ public class Game {
         setGameMode(gameMode);
         setGameState(0);
 
-
+        Tour = 1; // Le joueur1 commence
 
         selectedx = 0;
         selectedy = 0;
@@ -279,6 +253,15 @@ public class Game {
                     setCaseColor(x, y, -1);
                 }
             }
+        }
+
+        if (getTour() == 1) {
+            Joueur1.setScore(Joueur1.getScore() + getSelectedScore() * 1000); // Ajout score
+            setTour(2);
+        }
+        else {
+            Joueur2.setScore(Joueur2.getScore() + getSelectedScore() * 1000); // Ajout score
+            setTour(1);
         }
     }
 
