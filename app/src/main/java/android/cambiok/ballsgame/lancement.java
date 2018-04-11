@@ -18,7 +18,6 @@ import java.util.jar.Attributes;
 public class lancement extends AppCompatActivity {
 
 
-    String nom;
     EditText pseudo, pseudo2;
 
     @Override
@@ -58,10 +57,10 @@ public class lancement extends AppCompatActivity {
     public void meilleursscores (View view) {
 
 
-        Intent intent = new Intent(this, MeilleurScore.class);
+        Intent intent = new Intent(this, BestScore.class);
         startActivity(intent);
 
-        // }
+
     }
 
 
