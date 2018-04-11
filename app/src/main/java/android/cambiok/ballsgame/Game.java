@@ -226,6 +226,8 @@ public class Game {
         }
     }
 
+    // Permet de nettoyer la variable TableauMemoire & SelectedTableau
+    // On met toutes les cases à 0.
     void CleanTabMemoire() {
         int x, y;
 
@@ -237,6 +239,9 @@ public class Game {
         }
     }
 
+    // Fonction "skynet"
+    // Permet d'eliminer les cases selectionner et de les remplacer par des cases vides (-1)
+    // Ajoute également le score au joueur qui vient de jouer.
     public void skynet() {
         int x, y;
 
@@ -248,18 +253,21 @@ public class Game {
             }
         }
 
-        if (getTour() == 1) {
-            Joueur1.setScore(Joueur1.getScore() + getSelectedScore() * 100); // Ajout score
+        // Ajout du score.
+        if (getTour() == 1) { // Joueur 1
+            Joueur1.setScore(Joueur1.getScore() + getSelectedScore()); // Ajout score
 
             if (getGameMode() == 1) // Si mode 2 joueurs, alors on alterne.
                 setTour(2);
         }
-        else {
-            Joueur2.setScore(Joueur2.getScore() + getSelectedScore() * 100); // Ajout score
+        else { // Joueur 2
+            Joueur2.setScore(Joueur2.getScore() + getSelectedScore()); // Ajout score
             setTour(1);
         }
     }
 
+    // Fonction permet de calculer le score potentiel de la selection en cours
+    // On calcul le nombre de case selectionné
     public int getSelectedScore() {
         int score = 0;
         int x, y;
@@ -275,6 +283,9 @@ public class Game {
         return score;
     }
 
+    // Fonction permettant de selectionner les cases de même couleur autour de la case xy
+    // Attention : fonction recursive
+    // Afin de ne pas se "bloquer", on utilise le tableau mémoire.
     public void TrouverVoisin(int x, int y) {
         // On me donne un point x et y.
         // 1. J'inscrit ce pt en mémoire
@@ -291,21 +302,25 @@ public class Game {
             SelectedTableau[x][y] = 1;
 
             // On vérifie les quatre voisins autour.
+            // Je vérifie le nord
             if ((x + 1) < getTailleX() && (GetCaseColor(x, y) == GetCaseColor(x + 1, y)) && TableauMemoire[x + 1][y] == 0) {
                 SelectedTableau[x + 1][y] = 1;
                 TrouverVoisin(x + 1, y);
             }
 
+            // Je vérifie le sud
             if ((x - 1) >= 0 && (GetCaseColor(x, y) == GetCaseColor(x - 1, y)) && TableauMemoire[x - 1][y] == 0) {
                 SelectedTableau[x - 1][y] = 1;
                 TrouverVoisin(x - 1, y);
             }
 
+            // Je vérifie l'est
             if ((y + 1) < getTailleY() && (GetCaseColor(x, y) == GetCaseColor(x, y + 1)) && TableauMemoire[x][y + 1] == 0) {
                 SelectedTableau[x][y + 1] = 1;
                 TrouverVoisin(x, y + 1);
             }
 
+            // Je vérifie l'ouest
             if ((y - 1) >= 0 && (GetCaseColor(x, y) == GetCaseColor(x, y - 1)) && TableauMemoire[x][y - 1] == 0) {
                 SelectedTableau[x][y - 1] = 1;
                 TrouverVoisin(x, y - 1);
@@ -313,9 +328,9 @@ public class Game {
         }
     }
 
-
-
     // Mise à jour du tableau de jeu.
+    // Permet de faire "tomber" les cases si des cases vides sont en dessous
+    // Permet de "ranger" les cases vers la droite si des colonnes entières sont vides.
     void updateGame() {
         int x, y;
         int x2, y2;
@@ -326,11 +341,11 @@ public class Game {
         // Decalage vers le bas : ok
         for (y = 0; y < getTailleY(); y++) {
             for (x = 0; x < getTailleX(); x++) {
-                if (GetCaseColor(x, y) == -1) {
+                if (GetCaseColor(x, y) == -1) { // Case vide ?
                     x2 = x;
                     y2 = y;
 
-                    for (x2 = x; x2 >= 0; x2--) {
+                    for (x2 = x; x2 >= 0; x2--) { // Si j'ai reperé une case vide, je boucle pour toutes les descendres.
                         if (x2 - 1 >= 0) {
                             color = GetCaseColor(x2 - 1, y2);
                             setCaseColor(x2, y2, color);
@@ -342,7 +357,7 @@ public class Game {
         }
 
 
-        // Decallage à droite
+        // Decallage à droite : ok
         for (y = getTailleY() - 1; y >= 0; y--) {
             // On regarde si la colonne y est "vide" (= remplie de -1).
             colonnevide = true;
