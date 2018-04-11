@@ -223,13 +223,13 @@ public class Game {
         }
 
         if (getTour() == 1) {
-            Joueur1.setScore(Joueur1.getScore() + getSelectedScore() * 1000); // Ajout score
+            Joueur1.setScore(Joueur1.getScore() + getSelectedScore() * 100); // Ajout score
 
             if (getGameMode() == 1) // Si mode 2 joueurs, alors on alterne.
                 setTour(2);
         }
         else {
-            Joueur2.setScore(Joueur2.getScore() + getSelectedScore() * 1000); // Ajout score
+            Joueur2.setScore(Joueur2.getScore() + getSelectedScore() * 100); // Ajout score
             setTour(1);
         }
     }
