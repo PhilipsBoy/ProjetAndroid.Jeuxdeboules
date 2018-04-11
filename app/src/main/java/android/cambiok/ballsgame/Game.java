@@ -1,5 +1,6 @@
-// ff
-// gg
+// Classe java Game
+// Description : Génération du tableau, gestion des clicks, ..
+
 package android.cambiok.ballsgame;
 
 import java.util.Random;
@@ -109,6 +110,7 @@ public class Game {
 
             // Si le joueur click mais que la partie est game over : Reset
             if (varover == 1 && getGameMode() == 0) {
+                varover = 0;
                 Joueur1.setScore(Joueur1.getScoreLevel()); // On remet le score a l'entrée du lvl
                 GenerationAleatoireTableau(getGameLevel());
             }
