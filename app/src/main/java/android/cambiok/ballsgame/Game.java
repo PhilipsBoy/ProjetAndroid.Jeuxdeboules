@@ -54,6 +54,20 @@ public class Game {
             Tableau[x][y] = color;
     }
 
+    public void setGameMode(int mode) {
+        // Le jeu ne contient que deux modes.
+        // mode = 0 : 1 joueur
+        // mode = 1 : 2 joueurs
+        if (mode == 0 || mode == 1)
+            GameMode = mode;
+        else
+            GameMode = 0;
+
+        // Reset Tableau et elements de jeux
+        Joueur1.setScore(0);
+        Joueur2.setScore(0);
+    }
+
     // Constructeur classe
     public Game(int tailleX, int tailleY, int gameMode) {
         int x, y;
@@ -99,20 +113,28 @@ public class Game {
         }
     }
 
-
+    // Retourne varover
+    // Cette variable indique si la partie est over.
     public int CheckGameOver2() {
         return varover;
     }
 
+    // Calcul si la partie est over.
     public int CheckGameOver() {
         int x, y;
 
         int gameover = 1;
         int score = 1;
 
+        // On fait une boucle sur toutes les cases du tableau
+        // On selectionne la case
+        // On regarde le score potentiel
+
+        // Si pour l'une des cases, le score potentiel était différent de 1
+        // alors : il reste au moins un groupe selectionnable dans le tableau
         for (x = 0; x < getTailleX(); x++) {
             for (y = 0; y < getTailleY(); y++){
-                if (GetCaseColor(x, y) != -1) {
+                if (GetCaseColor(x, y) != -1) { // Si case non vide uniquement
                     CleanTabMemoire();
                     TrouverVoisin(x, y);
                     score = getSelectedScore();  // compte selected tab
@@ -128,7 +150,10 @@ public class Game {
         return gameover;
     }
 
-
+    // Gestion des clicks dans le jeu
+    // Permet de selectionner un ensemble de case
+    // Ou bien d'eliminer un groupe de case
+    // Gère aussi la fin de partie.
     public void updateGameState(int x, int y) {
         if (getSelectedScore() > 0) { // Existe t-il déjà des blocs selectionnés
             if (SelectedTableau[x][y] == 1) { // Le click se trouve t-il sur une case selectionné
@@ -183,24 +208,6 @@ public class Game {
 
     }
 
-
-
-    public void setGameMode(int mode) {
-
-        if (mode == 0 || mode == 1)
-            GameMode = mode;
-        else
-            GameMode = 0;
-
-        // Reset Tableau et elements de jeux
-        Joueur1.setScore(0);
-        Joueur2.setScore(0);
-    }
-
-
-
-
-
     // void GenerationAleatoireTableau(int difficulte) {
     // Tab = -1 -> case vide
     // Tab = [0; difficulte] -> case pleine avec couleur [0; difficulte]
@@ -209,10 +216,12 @@ public class Game {
         Random r = new Random();
         int randomNumber;
 
+        // Pour toutes les cases, on genère un nombre aléatoire
+        // Ce nombre est ensuite stocké dans le tableau
         for (x = 0; x < getTailleX(); x++) {
             for (y = 0; y < getTailleY(); y++){
                 randomNumber = r.ints(1, 0, difficulte).findFirst().getAsInt();
-                Tableau[x][y] = randomNumber;
+                setCaseColor(x, y, randomNumber);
             }
         }
     }
