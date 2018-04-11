@@ -11,7 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class BestScore extends AppCompatActivity {
@@ -32,7 +38,41 @@ public class BestScore extends AppCompatActivity {
 
         ListView scores = (ListView) findViewById(R.id.tableau);
         scores.setAdapter(adapter);
+        try {
+            test();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    public void test () throws IOException {
+        File path = this.getFilesDir();
+        File file = new File(path, "my-file-name.txt");
+
+
+        FileOutputStream stream = new FileOutputStream(file);
+        try {
+            stream.write("A|B|C".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            stream.close();
+        }
+
+        // Lecture
+        int length = (int) file.length();
+
+        byte[] bytes = new byte[length];
+
+        FileInputStream in = new FileInputStream(file);
+        try {
+            in.read(bytes);
+        } finally {
+            in.close();
+        }
+
+        String contents = new Scanner(file).useDelimiter("|").next();
     }
 
 
