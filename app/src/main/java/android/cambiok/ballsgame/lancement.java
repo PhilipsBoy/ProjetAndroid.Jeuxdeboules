@@ -15,7 +15,7 @@ import java.util.jar.Attributes;
 
 
 
-public class lancement extends AppCompatActivity {
+public class lancement extends AppCompatActivity { //Activité Launcher qui ouvre sur les autres
 
 
     EditText pseudo, pseudo2, difficulte;

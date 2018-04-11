@@ -78,7 +78,7 @@ public class BestScore extends AppCompatActivity {
 
 
         // A modifier pour mettre PseudoX / ScoreX j'en sais rien
-        String [] tabScore = {contents};
+        String [] tabScore = {Pseudo1, Score1, Pseudo2, Score2, Pseudo3, Score3, Pseudo4, Score4};
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.scores, tabScore);
 
@@ -124,7 +124,7 @@ public class BestScore extends AppCompatActivity {
 
         Pseudo4 = s.next();
         Score4 = s.next();
-
+/*
         Pseudo5 = s.next();
         Score5 = s.next();
 
@@ -141,6 +141,6 @@ public class BestScore extends AppCompatActivity {
         Score9 = s.next();
 
         Pseudo10 = s.next();
-        Score10 = s.next();
+        Score10 = s.next();*/
     }
 }

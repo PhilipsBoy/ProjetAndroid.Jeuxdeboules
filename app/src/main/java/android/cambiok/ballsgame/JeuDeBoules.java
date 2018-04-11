@@ -71,7 +71,7 @@ public class JeuDeBoules extends AppCompatActivity {
 
         GameEngine = new Game(13, 10, mode); // ajouter difficulte
 
-        GameEngine.Joueur1.setName(nomJoueur1);
+        GameEngine.Joueur1.setName(nomJoueur1); // Attribution du nom des joueurs
         GameEngine.Joueur2.setName(nomJoueur2);
 
 
@@ -81,7 +81,7 @@ public class JeuDeBoules extends AppCompatActivity {
         Paint paint = null;
 
 
-        public MyView(Context context) {
+        public MyView(Context context) { //Création de la view
             super(context);
             paint = new Paint();
         }
@@ -98,10 +98,10 @@ public class JeuDeBoules extends AppCompatActivity {
              case(MotionEvent.ACTION_DOWN): //Quand touché sur l'écran tactile
 
 
-                    initialX = event.getX();
+                    initialX = event.getX(); // Récupération des coordonées du click
                     initialY = event.getY();
 
-                    xx_tmp = (int) initialX / 107;
+                    xx_tmp = (int) initialX / 107; // Choix du carré le plus proche correspondant au click
                     yy_tmp = (int) initialY / 107;
 
                     if (xx_tmp >= 0 && xx_tmp < 10 && yy_tmp >= 0 && yy_tmp < 13) {
@@ -119,14 +119,14 @@ public class JeuDeBoules extends AppCompatActivity {
 
 
 
-        protected void onDraw(Canvas testCanv) {
+        protected void onDraw(Canvas testCanv) { // Méthode onDraw pour dessiner sur testCanvas
             super.onDraw(testCanv);
             int x = 0;
             int y = 0;
             int w = 95;
             int z = 95;
             int i, j;
-            paint.setStyle(Paint.Style.FILL);
+            paint.setStyle(Paint.Style.FILL); //Paramétrage des paint
             paint.setColor(Color.WHITE);
             testCanv.drawPaint(paint);
 
@@ -146,14 +146,14 @@ public class JeuDeBoules extends AppCompatActivity {
             MediaPlayer mp2;
             mp2 = MediaPlayer.create(JeuDeBoules.this, R.raw.game_over); // mp2 lié au fichier mp3 game over
             String fin;
-            if (GameEngine.CheckGameOver2() == 1) {
+            if (GameEngine.CheckGameOver2() == 1) { //Vérification de l'état de la partie
                      fin = "Game Over";
 
                 } else {
                     fin = "En jeu";
                 }
 
-            if(GameEngine.getTour()== 1 && GameEngine.getGameMode() == 1){
+            if(GameEngine.getTour()== 1 && GameEngine.getGameMode() == 1){ //Si mode 2 joueurs, attribution d'une couleur à celui qui à la main
                 painttext1.setColor(Color.RED);
             }else painttext2.setColor(Color.RED);
 
@@ -169,6 +169,7 @@ public class JeuDeBoules extends AppCompatActivity {
 
             int tab [][]= GameEngine.getTableau();
             int Selectedtab [][]= GameEngine.getSelectedTableau();
+
             if (GameEngine.CheckGameOver2() == 1)
                 mp2.start();
 
@@ -177,17 +178,17 @@ public class JeuDeBoules extends AppCompatActivity {
 
 
 
-            for (j = 0, y = 5; j < GameEngine.getTailleX(); j++) {
+            for (j = 0, y = 5; j < GameEngine.getTailleX(); j++) { // Position du dessin en Y
 
 
-                for (i = 0, x = 5; i < GameEngine.getTailleY(); i++) {
+                for (i = 0, x = 5; i < GameEngine.getTailleY(); i++) { // Position du dessin en X
 
 
 
                     testPaint.setStyle(Paint.Style.FILL);
 
                     if (tab[j][i] == 0) {
-                        testPaint.setColor(Color.GREEN);
+                        testPaint.setColor(Color.GREEN); // Application de la couleur aux rectangles en fonction de la difficulté
                     }
                     else if (tab[j][i] == 1) {
                         testPaint.setColor(Color.BLUE);
@@ -208,17 +209,17 @@ public class JeuDeBoules extends AppCompatActivity {
                         testPaint.setColor(Color.BLACK);
                     }
                     else {
-                        //testPaint.setColor(Color.GREEN);
+
                     }
 
                     if (tab[j][i] != -1) {
                         if (Selectedtab[j][i] == 1) {
                             // selectionné
                             testPaint.setColor(Color.BLACK);
-                            testCanv.drawRect(x, y, x + taille, y + taille, testPaint);
+                            testCanv.drawRect(x, y, x + taille, y + taille, testPaint); // Dessin d'un rectangle noir lors de la sélection
                         } else {
                             // non selectionné
-                            testCanv.drawRect(x, y, x + taille, y + taille, testPaint);
+                            testCanv.drawRect(x, y, x + taille, y + taille, testPaint); // Dessin des rectangles du plateau de jeu
                         }
                     }
 
