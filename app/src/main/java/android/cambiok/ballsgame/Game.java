@@ -2,7 +2,6 @@
 // Description : Génération du tableau, gestion des clicks, ..
 
 package android.cambiok.ballsgame;
-
 import java.util.Random;
 
 /**
@@ -10,29 +9,95 @@ import java.util.Random;
  */
 
 public class Game {
-    int Tableau[][];
-    int SelectedTableau[][];
-    int TableauMemoire[][];
+    int Tableau[][]; // Tableau principal, chaque case comporte un chiffre. Ce chiffre représente une couleur. -1 représente une case vide.
+    int SelectedTableau[][]; // Tableau indiquant si la case est selectionné
+    int TableauMemoire[][]; // Tableau mémoire permettant de ne pas se perdre dans la recursion
 
-    int selectedx;
-    int selectedy;
+    int tailleX; // Taille tableau X
+    int tailleY; // Taille tableau y
 
-    int tailleX;
-    int tailleY;
+    Joueur Joueur1; // Joueur1
+    Joueur Joueur2; // Joueur2
 
-    Joueur Joueur1;
-    Joueur Joueur2;
-
-    // Game mode
-    // 0 : 1 joueur
-    // 1 : 2 joueurs
-    int GameMode;
-
-    int GameLevel;
-
-    int varover;
-
+    int GameMode; // Game mode : 0 = 1Joueur; 1 = 2 Joueurs
+    int GameLevel; // Niveau de difficulté
+    int varover; // La partie est-elle terminée?
     int Tour; // Determine quel joueur doit jouer 1->Joueur1, 2->Joueur2
+
+    // Fonctions get/set
+    public int getTailleX() {return tailleX;}
+    public int getTailleY() {return tailleY;}
+
+    public void setTailleX(int taille) {tailleX = taille;}
+    public void setTailleY(int taille) {tailleY = taille;}
+
+    public int getGameLevel() {return GameLevel;}
+    public void setGameLevel(int GameLevel2) {GameLevel = GameLevel2;}
+
+    public int getGameMode() {return GameMode;}
+
+    public int getTour () {return Tour;}
+    public void setTour (int Tourr) {Tour = Tourr;}
+
+    public int [][] getTableau() {return Tableau;}
+    public int [][] getSelectedTableau() {return SelectedTableau;}
+
+    int GetCaseColor(int x, int y) {
+        if ((x >= 0 && x < getTailleX()) && (y >= 0 && y < getTailleY())) // Protection dépassement tableau
+            return Tableau[x][y];
+        else
+            return 0;
+    }
+
+    void setCaseColor(int x, int y, int color) {
+        if ((x >= 0 && x < getTailleX()) && (y >= 0 && y < getTailleY())) // Protection dépassement tableau
+            Tableau[x][y] = color;
+    }
+
+    // Constructeur classe
+    public Game(int tailleX, int tailleY, int gameMode) {
+        int x, y;
+        int level;
+
+        // On décide la taille du tableau
+        setTailleX(tailleX);
+        setTailleY(tailleY);
+
+        // Init des variables joueurs.
+        Joueur1 = new Joueur("Joueur1");
+        Joueur2 = new Joueur("Joueur2");
+
+        // Mise en place du mode (1 joueur / 2 joueur)
+        setGameMode(gameMode);
+
+        // Le joueur 1 commence toujours les parties.
+        setTour(1);
+
+        Tableau = new int[getTailleX()][getTailleY()];
+        SelectedTableau = new int[getTailleX()][getTailleY()];
+        TableauMemoire = new int[getTailleX()][getTailleY()];
+
+        // Selection du niveau de difficulté
+        // Si mode 1 joueur : on commence à partir du level 1
+        // Sinon : on commence à partir du level2.
+        // Cela évite de donner un avantage trop fort au joueur qui commence.
+        if (getGameMode() == 0)
+            setGameLevel(1);
+        else
+            setGameLevel(2);
+
+        // Génération du tableau de jeu en fonction du level.
+        level = getGameLevel();
+        GenerationAleatoireTableau(level);
+
+        // Mise à zéro des tableaux mémoire & selection.
+        for (x = 0; x < getTailleX(); x++) {
+            for (y = 0; y < getTailleY(); y++) {
+                SelectedTableau[x][y]  = 0;
+                TableauMemoire[x][y] = 0;
+            }
+        }
+    }
 
 
     public int CheckGameOver2() {
@@ -118,19 +183,7 @@ public class Game {
 
     }
 
-    public int getTailleX() {return tailleX;}
-    public int getTailleY() {return tailleY;}
 
-    public void setTailleX(int taille) {tailleX = taille;}
-    public void setTailleY(int taille) {tailleY = taille;}
-
-    public int getGameLevel() {return GameLevel;}
-    public void setGameLevel(int GameLevel2) {GameLevel = GameLevel2;}
-
-    public int getGameMode() {return GameMode;}
-
-    public int getTour () {return Tour;}
-    public void setTour (int Tourr) {Tour = Tourr;}
 
     public void setGameMode(int mode) {
 
@@ -144,47 +197,9 @@ public class Game {
         Joueur2.setScore(0);
     }
 
-    public int [][] getTableau() {return Tableau;}
-    public int [][] getSelectedTableau() {return SelectedTableau;}
 
-    public Game(int tailleX, int tailleY, int gameMode) { // Constructeur Game
-        int x, y;
 
-        //
-        setTailleX(tailleX);
-        setTailleY(tailleY);
 
-        Joueur1 = new Joueur("Joueur1");
-        Joueur2 = new Joueur("Joueur2");
-
-        setGameMode(gameMode);
-
-        Tour = 1; // Le joueur1 commence
-
-        selectedx = 0;
-        selectedy = 0;
-
-        Tableau = new int[getTailleX()][getTailleY()];
-        SelectedTableau = new int[getTailleX()][getTailleY()];
-        TableauMemoire = new int[getTailleX()][getTailleY()];
-
-        if (getGameMode() == 0) // Mode 1 joueur : on commence à partir du level 1
-            setGameLevel(1);
-        else // Mode 2 joueurs : on commence à partir du level 2
-            setGameLevel(2);
-
-        int level = getGameLevel();
-
-        GenerationAleatoireTableau(level);
-
-        // Mise à zéro tableau selection
-        for (x = 0; x < getTailleX(); x++) {
-            for (y = 0; y < getTailleY(); y++) {
-                SelectedTableau[x][y]  = 0;
-                TableauMemoire = new int[getTailleX()][getTailleY()];
-            }
-        }
-    }
 
     // void GenerationAleatoireTableau(int difficulte) {
     // Tab = -1 -> case vide
@@ -289,27 +304,7 @@ public class Game {
         }
     }
 
-    int GetCaseColor(int x, int y) {
-        if ((x >= 0 && x < getTailleX()) && (y >= 0 && y < getTailleY()))
-            return Tableau[x][y];
-        else
-            return 0;
-    }
 
-    void setCaseColor(int x, int y, int color) {
-        if ((x >= 0 && x < getTailleX()) && (y >= 0 && y < getTailleY()))
-            Tableau[x][y] = color;
-    }
-
-    void initTableau()  {
-        int x, y;
-
-        for (x = 0; x < getTailleX(); x++) {
-            for (y = 0; y < getTailleY(); y++){
-                Tableau[x][y] = -1;
-            }
-        }
-    }
 
     // Mise à jour du tableau de jeu.
     void updateGame() {
