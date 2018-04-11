@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -31,10 +32,13 @@ import java.util.jar.Attributes;
 public class JeuDeBoules extends AppCompatActivity {
 
     private Canvas testCanv;
-    private Paint testPaint = new Paint();
+    private Paint testPaint = new Paint(); //Création des différents Paint utilisés dans l'acitivité
     private Paint painttext = new Paint();
+    private Paint painttext1 = new Paint();
+    private Paint painttext2 = new Paint();
+    private Paint paintform = new Paint();
     float initialX, initialY;
-    private ImageView plateau;
+
 
     int xx, yy;
     int xx_tmp, yy_tmp;
@@ -47,25 +51,26 @@ public class JeuDeBoules extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(new MyView(this));
-        //setContentView(R.layout.activity_jeu_de_boules);
-        //plateau = (ImageView) findViewById(R.id.MyView);
-        //TextView score = (TextView) findViewById(R.id.textView);
-        //score.setText(0);
-        //TableLayout monLayout = (TableLayout) findViewById(R.id.affich_message_layout);
-        //monLayout.addView(MyView,0);
+        setContentView(new MyView(this)); // On affiche l'image view où l'on dessinera avec le Canvas
+
+
         Bundle extras2 = getIntent().getExtras();
         int mode;
-        mode = extras2.getInt("ModeJeu");
+        mode = extras2.getInt("ModeJeu"); // Récupération du mode de jeu
 
         Bundle extras = getIntent().getExtras();
         Bundle extras3 = getIntent().getExtras();
+        Bundle extras4 = getIntent().getExtras();
 
         String nomJoueur1, nomJoueur2;
-        nomJoueur1 = extras.getString("Name");
+        nomJoueur1 = extras.getString("Name"); //Récupération des pseudos donnés dans l'activité lancement
         nomJoueur2 = extras3.getString("Name2");
 
-        GameEngine = new Game(13, 10, mode);
+        int difficulte;
+        difficulte = extras4.getInt("Difficulte"); // Récupération de la donnée difficulté
+
+        GameEngine = new Game(13, 10, mode); // ajouter difficulte
+
         GameEngine.Joueur1.setName(nomJoueur1);
         GameEngine.Joueur2.setName(nomJoueur2);
 
@@ -81,15 +86,17 @@ public class JeuDeBoules extends AppCompatActivity {
             paint = new Paint();
         }
 
-        public boolean onTouchEvent (MotionEvent event) {
+        public boolean onTouchEvent (MotionEvent event) { // fonction qui gère les actions sur l'écran
 
             int action = event.getAction();
 
-
+            MediaPlayer mp;
+            mp = MediaPlayer.create(JeuDeBoules.this, R.raw.wow); // mp lié au fichier mp3 wow
 
             switch (action) {
 
-             case(MotionEvent.ACTION_DOWN):
+             case(MotionEvent.ACTION_DOWN): //Quand touché sur l'écran tactile
+
 
                     initialX = event.getX();
                     initialY = event.getY();
@@ -98,7 +105,9 @@ public class JeuDeBoules extends AppCompatActivity {
                     yy_tmp = (int) initialY / 107;
 
                     if (xx_tmp >= 0 && xx_tmp < 10 && yy_tmp >= 0 && yy_tmp < 13) {
+
                         GameEngine.updateGameState(yy_tmp, xx_tmp);
+                        mp.start();
                     }
 
                     break;
@@ -120,39 +129,48 @@ public class JeuDeBoules extends AppCompatActivity {
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.WHITE);
             testCanv.drawPaint(paint);
-            painttext.setStyle(Paint.Style.FILL);
-            painttext.setColor(Color.BLACK);
+
+            paintform.setStyle(Paint.Style.FILL);
+            paintform.setColor(Color.BLACK);
+
+            painttext1.setStyle(Paint.Style.FILL);
+            painttext1.setColor(Color.BLACK);
+
+            painttext2.setStyle(Paint.Style.FILL);
+            painttext2.setColor(Color.BLACK);
+
+            painttext1.setTextSize(50);
+            painttext2.setTextSize(50);
+
             painttext.setTextSize(50);
+            MediaPlayer mp2;
+            mp2 = MediaPlayer.create(JeuDeBoules.this, R.raw.game_over); // mp2 lié au fichier mp3 game over
             String fin;
             if (GameEngine.CheckGameOver2() == 1) {
-                     fin = "oui";
+                     fin = "Game Over";
+
                 } else {
-                    fin = "non";
+                    fin = "En jeu";
                 }
 
-            testCanv.drawText(GameEngine.Joueur1.getName() + " : " +  String.valueOf(GameEngine.Joueur1.getScore())+" points", 85, 1550, painttext);
-            testCanv.drawText("Niveau : " + String.valueOf(GameEngine.getGameLevel()),715, 1550, painttext );
-            testCanv.drawText("Terminé ?: " + fin,715, 1650, painttext );
+            if(GameEngine.getTour()== 1 && GameEngine.getGameMode() == 1){
+                painttext1.setColor(Color.RED);
+            }else painttext2.setColor(Color.RED);
+
+            testCanv.drawText(GameEngine.Joueur1.getName() + " : " +  String.valueOf(GameEngine.Joueur1.getScore())+" points", 85, 1550, painttext1); // Pseudo et score du joueur 1
+            testCanv.drawText("Niveau : " + String.valueOf(GameEngine.getGameLevel()),715, 1550, painttext);
+            testCanv.drawText(fin,715, 1650, painttext);
+            testCanv.drawRect(1068, 1455, 5, 1470, paintform); // barre de séparation
 
             if(GameEngine.getGameMode() == 1){
-                testCanv.drawText(GameEngine.Joueur2.getName() + " : " +  String.valueOf(GameEngine.Joueur2.getScore())+ " points", 85, 1650, painttext );
+                testCanv.drawText(GameEngine.Joueur2.getName() + " : " +  String.valueOf(GameEngine.Joueur2.getScore())+ " points", 85, 1650, painttext2 ); // Pseudo et score du joueur 2
             }
 
-            GameEngine.updateGame(); // decalages bas & droit
-
-            // Use Color.parseColor to define HTML colors
-            //paint.setStrokeWidth(10);
-            //paint.setStyle(Paint.Style.STROKE);
-            //paint.setColor(Color.BLACK);
-
-
-            // x = left
-            // y = top
-            // w = right
-            // z = bot
 
             int tab [][]= GameEngine.getTableau();
             int Selectedtab [][]= GameEngine.getSelectedTableau();
+            if (GameEngine.CheckGameOver2() == 1)
+                mp2.start();
 
 
             int espacement = 107;
@@ -211,13 +229,6 @@ public class JeuDeBoules extends AppCompatActivity {
                 y = y + espacement;
             }
 
-            /*
-
-            paintcoord.setStyle(Paint.Style.FILL);
-            paintcoord.setColor(Color.BLACK);
-            testCanv.drawRect(initialX, initialY, initialX+taille, initialY+taille, paintcoord);
-            //testCanv.drawRect(x, y, x+taille, y+taille, testPaint);
-            */
 
 
         }
