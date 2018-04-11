@@ -25,23 +25,7 @@ public class Game {
     // Game mode
     // 0 : 1 joueur
     // 1 : 2 joueurs
-    // autre : erreur
     int GameMode;
-
-    // Game State
-    // Si Game mode = 0
-    // 0 : tableau non vide + non bloqué
-    //  -> on attend un click sur un ensemble de block
-    //  -> un click sur un block a pour effet de le sectionner
-    // 1 : tableau non vide + bloqué
-    //  -> Le joueur est bloqué, gameover, on enregistre son score dans MeilleurScore
-    // 2 : tableau vide
-    //  -> on regenre un tableau avec augmentation de la difficulté
-    // Si Game mode = 1
-    // 0 :
-    // 1 :
-    // 2 :
-    int GameState;
 
     int GameLevel;
 
@@ -54,23 +38,14 @@ public class Game {
         return varover;
     }
 
-    public int getTour () {
-        return Tour;
-    }
-
-    public void setTour (int Tourr) {
-        Tour = Tourr;
-    }
-
-
     public int CheckGameOver() {
         int x, y;
 
         int gameover = 1;
         int score = 1;
 
-        for (x = 0; x < tailleX; x++) {
-            for (y = 0; y < tailleY; y++){
+        for (x = 0; x < getTailleX(); x++) {
+            for (y = 0; y < getTailleY(); y++){
                 if (GetCaseColor(x, y) != -1) {
                     CleanTabMemoire();
                     TrouverVoisin(x, y);
@@ -88,7 +63,7 @@ public class Game {
     }
 
 
-    public int updateGameState(int x, int y) {
+    public void updateGameState(int x, int y) {
         int mode = getGameMode();
 
         // mode 1 joueur
@@ -110,7 +85,7 @@ public class Game {
                     varover = CheckGameOver();
 
                     if (varover == 1) { // game over
-                        if (GetCaseColor(tailleX - 1, tailleY - 1) == -1) { // Tableau completement vide?
+                        if (GetCaseColor(getTailleX() - 1, getTailleY() - 1) == -1) { // Tableau completement vide?
                             varover = 0;
                             setGameLevel(getGameLevel() + 1);
                             GenerationAleatoireTableau(getGameLevel());
@@ -138,12 +113,6 @@ public class Game {
                      CleanTabMemoire();
             }
         }
-
-        // mode 2 joueurs
-        else {
-        }
-
-        return getGameState();
     }
 
     public int getTailleX() {return tailleX;}
@@ -156,7 +125,9 @@ public class Game {
     public void setGameLevel(int GameLevel2) {GameLevel = GameLevel2;}
 
     public int getGameMode() {return GameMode;}
-    public int getGameState() {return GameState;}
+
+    public int getTour () {return Tour;}
+    public void setTour (int Tourr) {Tour = Tourr;}
 
     public void setGameMode(int mode) {
 
@@ -167,22 +138,16 @@ public class Game {
 
         // Reset Tableau et elements de jeux
         Joueur1.setScore(0);
-        //Joueur2.setScore(0);
-
-        //setGameState(0);
-
-        //GenerationAleatoireTableau(3);
-        //CleanTabMemoire();
+        Joueur2.setScore(0);
     }
-
-    public void setGameState(int state) {GameState = state;}
 
     public int [][] getTableau() {return Tableau;}
     public int [][] getSelectedTableau() {return SelectedTableau;}
 
-    public Game(int tailleX, int tailleY, int gameMode) { // Constructeur
+    public Game(int tailleX, int tailleY, int gameMode) { // Constructeur Game
         int x, y;
 
+        //
         setTailleX(tailleX);
         setTailleY(tailleY);
 
@@ -190,7 +155,6 @@ public class Game {
         Joueur2 = new Joueur("Joueur2");
 
         setGameMode(gameMode);
-        setGameState(0);
 
         Tour = 1; // Le joueur1 commence
 
@@ -201,16 +165,18 @@ public class Game {
         SelectedTableau = new int[getTailleX()][getTailleY()];
         TableauMemoire = new int[getTailleX()][getTailleY()];
 
-
-        setGameLevel(1);
+        if (getGameMode() == 0) // Mode 1 joueur : on commence à partir du level 1
+            setGameLevel(1);
+        else // Mode 2 joueurs : on commence à partir du level 2
+            setGameLevel(2);
 
         int level = getGameLevel();
 
         GenerationAleatoireTableau(level);
 
         // Mise à zéro tableau selection
-        for (x = 0; x < tailleX; x++) {
-            for (y = 0; y < tailleY; y++) {
+        for (x = 0; x < getTailleX(); x++) {
+            for (y = 0; y < getTailleY(); y++) {
                 SelectedTableau[x][y]  = 0;
                 TableauMemoire = new int[getTailleX()][getTailleY()];
             }
@@ -225,8 +191,8 @@ public class Game {
         Random r = new Random();
         int randomNumber;
 
-        for (x = 0; x < tailleX; x++) {
-            for (y = 0; y < tailleY; y++){
+        for (x = 0; x < getTailleX(); x++) {
+            for (y = 0; y < getTailleY(); y++){
                 randomNumber = r.ints(1, 0, difficulte).findFirst().getAsInt();
                 Tableau[x][y] = randomNumber;
             }
@@ -257,7 +223,9 @@ public class Game {
 
         if (getTour() == 1) {
             Joueur1.setScore(Joueur1.getScore() + getSelectedScore() * 1000); // Ajout score
-            setTour(2);
+
+            if (getGameMode() == 1) // Si mode 2 joueurs, alors on alterne.
+                setTour(2);
         }
         else {
             Joueur2.setScore(Joueur2.getScore() + getSelectedScore() * 1000); // Ajout score
@@ -347,9 +315,6 @@ public class Game {
 
         int color = 0;
         boolean colonnevide;
-
-        // GetCaseColor(x, y);
-        // SetCaseColor(x, y, color);
 
         // Decalage vers le bas : ok
         for (y = 0; y < getTailleY(); y++) {
