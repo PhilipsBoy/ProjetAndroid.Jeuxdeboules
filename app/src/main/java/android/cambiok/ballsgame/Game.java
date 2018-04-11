@@ -64,55 +64,56 @@ public class Game {
 
 
     public void updateGameState(int x, int y) {
-        int mode = getGameMode();
+        if (getSelectedScore() > 0) { // Existe t-il déjà des blocs selectionnés
+            if (SelectedTableau[x][y] == 1) { // Le click se trouve t-il sur une case selectionné
+                skynet(); // Destruction des blocs selectionnes
+                CleanTabMemoire(); // On nettoie le tableau memoire
 
-        // mode 1 joueur
-        if (mode == 0 || mode == 1) {
-            if (getSelectedScore() > 0) { // Existe t-il déjà des blocs selectionnés
-                if (SelectedTableau[x][y] == 1) { // Le click se trouve t-il sur une case selectionné
+                // On fait tomber les cases et on les decale
+                updateGame();
+                updateGame();
+                updateGame();
+                updateGame();
 
+                // On verifie si la partie est terminée
+                varover = CheckGameOver();
 
-                    skynet(); // Destruction des blocs selectionnes
-                    CleanTabMemoire(); // On nettoie le tableau memoire
-
-                    // On fait tomber les cases et on les decale
-                    updateGame();
-                    updateGame();
-                    updateGame();
-                    updateGame();
-
-                    // On verifie si la partie est terminée
-                    varover = CheckGameOver();
-
-                    if (varover == 1) { // game over
-                        if (GetCaseColor(getTailleX() - 1, getTailleY() - 1) == -1) { // Tableau completement vide?
-                            varover = 0;
-                            setGameLevel(getGameLevel() + 1);
-                            GenerationAleatoireTableau(getGameLevel());
-                        }
-
-                        // Si tableau non terminé : on est en attente.
+                if (varover == 1) { // game over
+                    if (GetCaseColor(getTailleX() - 1, getTailleY() - 1) == -1) { // Tableau completement vide?
+                        varover = 0;
+                        Joueur1.setScoreLevel(Joueur1.getScore()); // On sauvegarde le score a l'entrée du lvl
+                        setGameLevel(getGameLevel() + 1);
+                        GenerationAleatoireTableau(getGameLevel());
                     }
 
-                    // Si aucune case, on genere un nouveau niveau
+                    // Si tableau non terminé : on est en attente.
                 }
-                else { // Le joueur click sur un nouvel ensemble de block.
-                    CleanTabMemoire();
-                    TrouverVoisin(x, y);
 
-                   if (getSelectedScore() == 1) // Si la taille du groupe est de une case : on ne selectionne pas.
-                      CleanTabMemoire();
-                }
+                // Si aucune case, on genere un nouveau niveau
             }
-
-            else { // Il n'y a pas de blocs selectionnés
+            else { // Le joueur click sur un nouvel ensemble de block.
                 CleanTabMemoire();
                 TrouverVoisin(x, y);
 
-                if (getSelectedScore() == 1) // Si une case : on annule la selection.
-                     CleanTabMemoire();
+               if (getSelectedScore() == 1) // Si la taille du groupe est de une case : on ne selectionne pas.
+                  CleanTabMemoire();
             }
         }
+
+        else { // Il n'y a pas de blocs selectionnés
+            CleanTabMemoire();
+            TrouverVoisin(x, y);
+
+            if (getSelectedScore() == 1) // Si une case : on annule la selection.
+                 CleanTabMemoire();
+
+            // Si le joueur click mais que la partie est game over : Reset
+            if (varover == 1 && getGameMode() == 0) {
+                Joueur1.setScore(Joueur1.getScoreLevel()); // On remet le score a l'entrée du lvl
+                GenerationAleatoireTableau(getGameLevel());
+            }
+        }
+
     }
 
     public int getTailleX() {return tailleX;}
