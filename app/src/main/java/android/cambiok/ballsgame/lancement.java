@@ -18,24 +18,26 @@ import java.util.jar.Attributes;
 public class lancement extends AppCompatActivity {
 
 
-    EditText pseudo, pseudo2;
+    EditText pseudo, pseudo2, difficulte;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lancement);
-        pseudo = (EditText) findViewById(R.id.pseudo);
+        pseudo = (EditText) findViewById(R.id.pseudo); // Association avec les textview
         pseudo2 = (EditText) findViewById(R.id.pseudo2);
+        difficulte = (EditText) findViewById(R.id.difficulte);
 
 
     }
 
     public void debutPartie1Joueur(View view) {
 
-       if(pseudo.getText().toString().length() > 2){
+       if(pseudo.getText().toString().length() > 2){ //On passe à l'activité suivante seulement si un pseudo est rentré
         Intent intent = new Intent(this, JeuDeBoules.class);
-        intent.putExtra("Name", pseudo.getText().toString());
-        intent.putExtra("ModeJeu", 0);
+        intent.putExtra("Name", pseudo.getText().toString()); // On passe le pseudo
+        intent.putExtra("ModeJeu", 0); //On passe le mode de jeu
+        intent.putExtra("Difficulte", difficulte.getText().toString()); //On passe la difficultés
         startActivity(intent);
 
          }
@@ -49,6 +51,7 @@ public class lancement extends AppCompatActivity {
             intent.putExtra("Name", pseudo.getText().toString());
             intent.putExtra("Name2", pseudo2.getText().toString());
             intent.putExtra("ModeJeu", 1);
+            intent.putExtra("Difficulte", difficulte.getText().toString());
             startActivity(intent);
         }
 

@@ -10,5 +10,6 @@
     <string name="accueil">Jeu de Boules</string>
     <string name="start2">Lancer une partie deux joueurs</string>
     <string name="scoring">Meilleurs Scores</string>
+    <string name="difficulte">Choix de la difficulté</string>
     <string name="title_activity_best_score">BestScore</string>
 </resources>
