@@ -26,7 +26,9 @@ public class BestScore extends AppCompatActivity {
     //ListView tab;
 
 
-    String [] tabScore = {"Coucou"};
+
+
+    String contents;
 
 
     @Override
@@ -34,15 +36,22 @@ public class BestScore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_best_score);
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.scores, tabScore);
 
-        ListView scores = (ListView) findViewById(R.id.tableau);
-        scores.setAdapter(adapter);
         try {
             test();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        String [] tabScore = {contents};
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.scores, tabScore);
+
+        ListView scores = (ListView) findViewById(R.id.tableau);
+        scores.setAdapter(adapter);
+
+
 
     }
 
@@ -72,7 +81,7 @@ public class BestScore extends AppCompatActivity {
             in.close();
         }
 
-        String contents = new Scanner(file).useDelimiter("|").next();
+        contents = new Scanner(file).useDelimiter("|").next();
     }
 
 
