@@ -78,7 +78,18 @@ public class BestScore extends AppCompatActivity {
 
 
         // A modifier pour mettre PseudoX / ScoreX j'en sais rien
-        String [] tabScore = {Pseudo1, Score1, Pseudo2, Score2, Pseudo3, Score3, Pseudo4, Score4};
+        //String [] tabScore = {Pseudo1 + " " + Score1, Score1, Pseudo2, Score2, Pseudo3, Score3, Pseudo4, Score4};
+        String [] tabScore = {"Classement", "", "", "", "Bat : 22400", "Bat : 1114", "Bat : 1114", "Bat : 1114", "Bat : 1114", "Bat : 50"};
+
+        int i = 0, y;
+
+        // Ajout position
+        for (i = 0, y = 1; i < tabScore.length; i++) {
+            if (tabScore[i] != "" && tabScore[i] != "Classement") {
+                tabScore[i] = y + ". " + tabScore[i];
+                y++;
+            }
+        }
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.scores, tabScore);
 
@@ -87,6 +98,7 @@ public class BestScore extends AppCompatActivity {
     }
 
     public void LectureFile () throws IOException {
+        /*
         File path = this.getFilesDir();
         File file = new File(path, "my-file-name.txt");
 
@@ -113,6 +125,29 @@ public class BestScore extends AppCompatActivity {
             in.close();
         }
 
+        Scanner test = new Scanner(file);
+
+        test.useDelimiter("|");
+        //String contents = test.next();
+
+        String tmp = "";
+
+        while (test.hasNext()) {
+            tmp = test.next();
+
+            if (tmp == "|")
+                break;
+
+            Pseudo1 = Pseudo1 + tmp;
+        }
+
+        contents = test.next();
+
+        String[] array = contents.split("|", -1);
+        array[0] = array[0] + "  ";
+        ;
+        ;
+/*
         Pseudo1 = s.next();
         Score1 = s.next();
 
@@ -124,7 +159,7 @@ public class BestScore extends AppCompatActivity {
 
         Pseudo4 = s.next();
         Score4 = s.next();
-/*
+
         Pseudo5 = s.next();
         Score5 = s.next();
 
