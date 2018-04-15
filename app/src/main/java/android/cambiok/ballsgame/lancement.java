@@ -37,7 +37,13 @@ public class lancement extends AppCompatActivity { //Activité Launcher qui ouvr
         Intent intent = new Intent(this, JeuDeBoules.class);
         intent.putExtra("Name", pseudo.getText().toString()); // On passe le pseudo
         intent.putExtra("ModeJeu", 0); //On passe le mode de jeu
-        intent.putExtra("Difficulte", difficulte.getText().toString()); //On passe la difficultés
+
+       String diff = difficulte.getText().toString();
+
+        if (diff.length() < 1)
+            diff = "1";
+
+        intent.putExtra("Difficulte", diff); //On passe la difficultés
         startActivity(intent);
 
          }

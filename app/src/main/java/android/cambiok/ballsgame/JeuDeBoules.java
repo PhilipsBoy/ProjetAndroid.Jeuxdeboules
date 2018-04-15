@@ -66,10 +66,10 @@ public class JeuDeBoules extends AppCompatActivity {
         nomJoueur1 = extras.getString("Name"); //Récupération des pseudos donnés dans l'activité lancement
         nomJoueur2 = extras3.getString("Name2");
 
-        int difficulte;
-        difficulte = extras4.getInt("Difficulte"); // Récupération de la donnée difficulté
+        String difficulte;
+        difficulte = extras4.getString("Difficulte"); // Récupération de la donnée difficulté
 
-        GameEngine = new Game(13, 10, mode); // ajouter difficulte
+        GameEngine = new Game(13, 10, mode, Integer.valueOf(difficulte)); // ajouter difficulte
 
         GameEngine.Joueur1.setName(nomJoueur1); // Attribution du nom des joueurs
         GameEngine.Joueur2.setName(nomJoueur2);
@@ -90,8 +90,8 @@ public class JeuDeBoules extends AppCompatActivity {
 
             int action = event.getAction();
 
-            MediaPlayer mp;
-            mp = MediaPlayer.create(JeuDeBoules.this, R.raw.wow); // mp lié au fichier mp3 wow
+            //MediaPlayer mp;
+            //mp = MediaPlayer.create(JeuDeBoules.this, R.raw.wow); // mp lié au fichier mp3 wow
 
             switch (action) {
 
@@ -107,7 +107,7 @@ public class JeuDeBoules extends AppCompatActivity {
                     if (xx_tmp >= 0 && xx_tmp < 10 && yy_tmp >= 0 && yy_tmp < 13) {
 
                         GameEngine.updateGameState(yy_tmp, xx_tmp);
-                        mp.start();
+                        //mp.start();
                     }
 
                     break;
@@ -143,8 +143,8 @@ public class JeuDeBoules extends AppCompatActivity {
             painttext2.setTextSize(50);
 
             painttext.setTextSize(50);
-            MediaPlayer mp2;
-            mp2 = MediaPlayer.create(JeuDeBoules.this, R.raw.game_over); // mp2 lié au fichier mp3 game over
+            //MediaPlayer mp2;
+            //mp2 = MediaPlayer.create(JeuDeBoules.this, R.raw.game_over); // mp2 lié au fichier mp3 game over
             String fin;
             if (GameEngine.CheckGameOver2() == 1) { //Vérification de l'état de la partie
                      fin = "Game Over";
@@ -170,8 +170,8 @@ public class JeuDeBoules extends AppCompatActivity {
             int tab [][]= GameEngine.getTableau();
             int Selectedtab [][]= GameEngine.getSelectedTableau();
 
-            if (GameEngine.CheckGameOver2() == 1)
-                mp2.start();
+            //if (GameEngine.CheckGameOver2() == 1)
+               // mp2.start();
 
 
             int espacement = 107;

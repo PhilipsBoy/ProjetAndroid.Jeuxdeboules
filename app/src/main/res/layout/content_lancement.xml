@@ -73,13 +73,13 @@
             android:layout_marginLeft="67dp"
             android:onClick="debutPartie2Joueur"/>
 
-        <Button
+        <!--<Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/scoring"
             android:layout_marginTop="300dp"
             android:layout_marginLeft="112dp"
-            android:onClick="meilleursscores"/>
+            android:onClick="meilleursscores"/>-->
 
 
 

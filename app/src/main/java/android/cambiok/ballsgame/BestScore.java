@@ -69,7 +69,7 @@ public class BestScore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_best_score);
 
-
+        /*
         try {
             LectureFile();
         } catch (IOException e) {
@@ -95,6 +95,8 @@ public class BestScore extends AppCompatActivity {
 
         ListView scores = (ListView) findViewById(R.id.tableau);
         scores.setAdapter(adapter);
+
+        */
     }
 
     public void LectureFile () throws IOException {

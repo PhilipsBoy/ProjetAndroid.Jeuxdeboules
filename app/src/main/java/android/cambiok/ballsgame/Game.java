@@ -69,7 +69,7 @@ public class Game {
     }
 
     // Constructeur classe
-    public Game(int tailleX, int tailleY, int gameMode) {
+    public Game(int tailleX, int tailleY, int gameMode, int difficulte) {
         int x, y;
         int level;
 
@@ -92,11 +92,15 @@ public class Game {
         TableauMemoire = new int[getTailleX()][getTailleY()];
 
         // Selection du niveau de difficulté
-        // Si mode 1 joueur : on commence à partir du level 1
+        // Si mode 1 joueur : on commence à partir du level difficulte
         // Sinon : on commence à partir du level2.
         // Cela évite de donner un avantage trop fort au joueur qui commence.
-        if (getGameMode() == 0)
-            setGameLevel(1);
+        if (getGameMode() == 0) {
+            if (difficulte < 1 || difficulte > 5)
+                difficulte = 1;
+
+            setGameLevel(difficulte);
+        }
         else
             setGameLevel(2);
 
